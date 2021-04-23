@@ -1,0 +1,36 @@
+{
+  "setting": {},
+  "condition": {
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "name": "查件页面",
+          "pathName": "pages/checkSite/checkSite",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/home/home",
+          "pathName": "pages/home/home",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "预约寄件页面",
+          "pathName": "pages/appoint/appoint",
+          "query": "",
+          "scene": null
+        }
+      ]
+    }
+  }
+}

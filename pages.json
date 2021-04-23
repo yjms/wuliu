@@ -1,0 +1,51 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "华秀物流"
+			}
+		}
+        ,{
+            "path" : "pages/checklogistics/checklogistics",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/checkSite/checkSite",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/home/home",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/appoint/appoint",
+            "style" : {}
+        }
+    ],
+	"tabBar":{
+		"color":"#888",
+		"selectedColor":"#5393FD",
+		"borderStyle":"white",
+		"list":[
+			{
+				"iconPath":"static/image/nav_1.png",
+				"selectedIconPath":"static/image/nav_2.png",
+				"text":"寄件",
+				"pagePath":"pages/home/home"
+			},
+			{
+				"iconPath":"static/image/nav_3.png",
+				"selectedIconPath":"static/image/nav_4.png",
+				"text":"查件",
+				"pagePath":"pages/checkSite/checkSite"
+			}
+		]
+	},
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "华秀物流",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	}
+}
