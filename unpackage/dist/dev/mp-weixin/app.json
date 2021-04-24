@@ -4,7 +4,8 @@
     "pages/checklogistics/checklogistics",
     "pages/checkSite/checkSite",
     "pages/home/home",
-    "pages/appoint/appoint"
+    "pages/appoint/appoint",
+    "pages/address/address"
   ],
   "subPackages": [],
   "window": {

@@ -29,6 +29,11 @@
           "pathName": "pages/appoint/appoint",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "地址簿",
+          "pathName": "pages/address/address",
+          "scene": null
         }
       ]
     }

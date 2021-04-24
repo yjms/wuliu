@@ -78,6 +78,7 @@
 				提交
 			</view>
 		</view>
+		<Footpop></Footpop>
 </view>
 </template>
 <!-- @font-face {
@@ -85,7 +86,11 @@
   src: url('@/static/font/iconfont.ttf'); /* IE9 */
 } -->
 <script>
+	import Footpop from "../components/Footpop.vue"
 	export default {
+		components:{
+			Footpop
+		},
 		data() {
 			return {
 				
@@ -97,7 +102,7 @@
 	}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	.whole{
 		width: 100vw;
 		height: 100vh;

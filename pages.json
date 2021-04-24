@@ -22,6 +22,10 @@
             "path" : "pages/appoint/appoint",
             "style" : {}
         }
+        ,{
+            "path" : "pages/address/address",
+            "style" : {}
+        }
     ],
 	"tabBar":{
 		"color":"#888",
