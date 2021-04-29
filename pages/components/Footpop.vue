@@ -9,7 +9,7 @@
 			<!-- 寄件备注 -->
 			<view class="popBody" v-if="showType==3">
 				<view class="ulremark row">
-					<view class="rmkItem" v-for="item in remark" :key="item">
+					<view class="rmkItem" v-for="(item,index) in remark" :key="item" :class="kdType == index+1 ? 'kdact':''" @click="()=>{this.kdType = index + 1}">
 						{{item}}
 					</view>
 				</view>
@@ -50,7 +50,7 @@
 					</view>
 					
 					<view class="ullist row">
-						<view class="wpitem" v-for="item in things" :key="item">
+						<view class="wpitem" v-for="(item,index) in things" :class="wpType == index+1 ? 'wpact':''" :key="item" @click="()=>{this.wpType = index + 1}">
 							{{item}}
 						</view>
 					</view>
@@ -108,7 +108,9 @@
 			return{
 				things:["文件","电子类产品","生活用品","服饰","生鲜","食品","易碎品","化妆品","药品","其他"],
 				remark:["请带纸箱","需要爬楼","缺文件袋","来前电话","请带面单","	请带胶袋"],
-				titleList:['选择物品类型重量和体积','保价','对快递员说']
+				titleList:['选择物品类型重量和体积','保价','对快递员说'],
+				wpType:0,// 默认没物品类型0
+				kdType:0,//对快递员说 类型
 			}
 		},
 		mounted(){
@@ -380,5 +382,9 @@
 			color: $all-font-Hcolor;
 		}
 	}
-	
+	.ullist>.wpact,.ulremark>.kdact{
+		color: #fff;
+		background-color: $all-font-Tcolor;
+		opacity: .8;
+	}
 </style>

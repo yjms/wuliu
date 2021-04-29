@@ -78,9 +78,39 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components
 var render = function() {
+  var this$1 = this
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  if (!_vm._isMounted) {
+    _vm.e0 = function(index) {
+      var args = [],
+        len = arguments.length - 1
+      while (len-- > 0) args[len] = arguments[len + 1]
+
+      var _temp = args[args.length - 1].currentTarget.dataset,
+        _temp2 = _temp.eventParams || _temp["event-params"],
+        index = _temp2.index
+
+      var _temp, _temp2
+
+      this$1.kdType = index + 1
+    }
+
+    _vm.e1 = function(index) {
+      var args = [],
+        len = arguments.length - 1
+      while (len-- > 0) args[len] = arguments[len + 1]
+
+      var _temp3 = args[args.length - 1].currentTarget.dataset,
+        _temp4 = _temp3.eventParams || _temp3["event-params"],
+        index = _temp4.index
+
+      var _temp3, _temp4
+
+      this$1.wpType = index + 1
+    }
+  }
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -224,8 +254,10 @@ var _default =
     return {
       things: ["文件", "电子类产品", "生活用品", "服饰", "生鲜", "食品", "易碎品", "化妆品", "药品", "其他"],
       remark: ["请带纸箱", "需要爬楼", "缺文件袋", "来前电话", "请带面单", "	请带胶袋"],
-      titleList: ['选择物品类型重量和体积', '保价', '对快递员说'] };
-
+      titleList: ['选择物品类型重量和体积', '保价', '对快递员说'],
+      wpType: 0, // 默认没物品类型0
+      kdType: 0 //对快递员说 类型
+    };
   },
   mounted: function mounted() {
 

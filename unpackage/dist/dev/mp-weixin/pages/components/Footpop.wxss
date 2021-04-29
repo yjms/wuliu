@@ -358,4 +358,9 @@
   bottom: 38rpx;
   color: #888;
 }
+.ullist > .wpact.data-v-ac11077a, .ulremark > .kdact.data-v-ac11077a {
+  color: #fff;
+  background-color: #5393FD;
+  opacity: .8;
+}
 

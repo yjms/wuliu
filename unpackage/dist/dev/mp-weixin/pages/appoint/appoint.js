@@ -235,7 +235,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
   data: function data() {
     return {
-      showType: 0, // 默认不显示弹窗
+      showType: 1, // 默认不显示弹窗
       qjType: 1 // 默认取件方式
     };
   },
