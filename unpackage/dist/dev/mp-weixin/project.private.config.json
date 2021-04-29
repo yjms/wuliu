@@ -53,6 +53,12 @@
           "pathName": "pages/orderlist/orderlist",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "物流页面",
+          "pathName": "pages/logisticsinfo/logisticsinfo",
+          "query": "",
+          "scene": null
         }
       ]
     }

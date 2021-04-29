@@ -7,7 +7,8 @@
     "pages/appoint/appoint",
     "pages/address/address",
     "pages/editaddress/editaddress",
-    "pages/orderlist/orderlist"
+    "pages/orderlist/orderlist",
+    "pages/logisticsinfo/logisticsinfo"
   ],
   "subPackages": [],
   "window": {

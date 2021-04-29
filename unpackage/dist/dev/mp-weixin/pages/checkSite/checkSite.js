@@ -252,6 +252,9 @@ var _default =
           console.log('条码内容：' + res.result);
         } });
 
+    },
+    lookDel: function lookDel() {
+      this.$tool.jump_nav("/pages/logisticsinfo/logisticsinfo");
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

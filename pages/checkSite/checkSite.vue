@@ -43,7 +43,7 @@
 		</view>
 		<view class="setbg row">
 			<scroll-view class="ydList" scroll-y="true">
-				<view class="bgWhile row1 yditem" v-for="it in 10">
+				<view class="bgWhile row1 yditem" v-for="it in 10" :key="item" @click="lookDel">
 					<view class="ydHeader">
 						<text>运单号: HX123456789101214 </text>
 						<text class="iconfont icon-fuzhicopy12"></text>
@@ -63,14 +63,14 @@
 						</view>
 					</view>
 					<view class="statusBox">
-						<text class="shink">已签收: </text>
+						<text class="shink setwid">已签收: </text>
 						<view class="shink rigTxt">您的快件代签收(驿站)，如有疑问请电联快递员【易龙】,电话17673615001。疫情期间顺丰每</view>
 					</view>
 					<view class="timebox">
-						 <text>签收时间: </text>
-						 <text>2021-03-03 09:41</text>
+						 <text class="setwid">签收时间: </text>
+						 <text class="setpad">2021-03-03 09:41</text>
 					</view>
-					<view class="ydFoot">
+					<view class="ydFoot" @click.stop>
 						<view class="share">
 							分享
 						</view>
@@ -120,6 +120,9 @@
 				        console.log('条码内容：' + res.result);
 				    }
 				});
+			},
+			lookDel(){
+				this.$tool.jump_nav("/pages/logisticsinfo/logisticsinfo")
 			}
 		}
 	}
@@ -164,6 +167,7 @@
 		top: 20upx;
 		transform: translateX(-50%);
 		align-items: center;
+		box-sizing: border-box;
 		
 	}
 	.iptBox{
@@ -183,19 +187,20 @@
 	}
 	.navBox{
 		width: 100%;
-		padding: 0 50upx;
+		// padding: 0 0upx;
 		padding-bottom: 6upx;
 		padding-top: 130upx;
 		display: flex;
 		justify-content: space-around;
 		border-bottom: 2upx solid #F2F2F2;
+		box-sizing: border-box;
 	}
 	//all-font-Tcolor
 	.navBox>.navItem{
 		display: flex;
 		justify-content: center;
 		padding-bottom: 20upx;
-		font-size: 30upx;
+		font-size: 34upx;
 		color: $all-font-Hcolor;
 	}
 	.navBox>.active{
@@ -224,7 +229,7 @@
 		justify-content: center;
 		color: #333;
 		height: 60upx;
-		font-size: 30upx;
+		font-size: 28upx;
 		border-radius: 30upx;
 		background-color: #F2F2F2;
 	}
@@ -360,5 +365,11 @@
 		.del{
 			margin-right: 26upx;
 		}
+	}
+	.setwid{
+		width: 120upx;
+	}
+	.setpad{
+		padding: 0 18upx;
 	}
 </style>
