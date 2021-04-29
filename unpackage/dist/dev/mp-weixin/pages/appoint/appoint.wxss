@@ -185,6 +185,9 @@
   -webkit-justify-content: space-between;
           justify-content: space-between;
 }
+.contentBox > text.data-v-59bd7eec {
+  font-size: 30rpx;
+}
 .contentBox .ulItem.data-v-59bd7eec:not(:last-child) {
   border-bottom: 2rpx solid #dedede;
 }
@@ -203,7 +206,7 @@
           justify-content: flex-end;
 }
 .contentBox .right .sbtn.data-v-59bd7eec {
-  font-size: 32rpx;
+  font-size: 28rpx;
   padding: 8rpx 20rpx;
   border: 1rpx solid #dedede;
   margin-right: 18rpx;
@@ -212,6 +215,7 @@
 }
 .ulItem > .right > .selectTxt.data-v-59bd7eec {
   margin-right: 18rpx;
+  font-size: 26rpx;
 }
 .ulItem > .right > .selectIcon.data-v-59bd7eec {
   margin-right: 20rpx;
@@ -259,5 +263,9 @@
   color: #888;
   font-size: 32rpx;
   padding-left: 20rpx;
+}
+.ulItem > .right > view.qjact.data-v-59bd7eec {
+  color: #5393FD;
+  border: 1rpx solid #5393FD;
 }
 

@@ -3,12 +3,12 @@
     "pages/index/index",
     "pages/checklogistics/checklogistics",
     "pages/checkSite/checkSite",
-    "pages/home/home",
     "pages/appoint/appoint",
     "pages/address/address",
     "pages/editaddress/editaddress",
     "pages/orderlist/orderlist",
-    "pages/logisticsinfo/logisticsinfo"
+    "pages/logisticsinfo/logisticsinfo",
+    "pages/login/login"
   ],
   "subPackages": [],
   "window": {
@@ -26,7 +26,7 @@
         "iconPath": "static/image/nav_1.png",
         "selectedIconPath": "static/image/nav_2.png",
         "text": "寄件",
-        "pagePath": "pages/home/home"
+        "pagePath": "pages/index/index"
       },
       {
         "iconPath": "static/image/nav_3.png",

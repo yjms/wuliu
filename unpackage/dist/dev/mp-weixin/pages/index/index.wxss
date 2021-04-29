@@ -24,69 +24,133 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.whole {
+.content {
   width: 100vw;
   height: 100vh;
-  padding: 0 46rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  justify-items: center;
+  background-color: #F2F2F2;
+}
+.header {
+  width: 694rpx;
+  height: 261rpx;
+  -webkit-border-radius: 20rpx;
+          border-radius: 20rpx;
+  margin-top: 18rpx;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  overflow: hidden;
+}
+.header > image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.ullist {
+  width: 694rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+          flex-wrap: wrap;
+  margin-top: 17rpx;
+  -webkit-border-radius: 20rpx;
+          border-radius: 20rpx;
+  overflow: hidden;
+  background-color: #FFFFFF;
+}
+.ullist .items {
+  width: 50%;
+  height: 172rpx;
+  background-color: #FFFFFF;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
+  border-bottom: 2rpx solid #EFEFEF;
   -webkit-box-align: center;
   -webkit-align-items: center;
           align-items: center;
   -webkit-box-pack: center;
   -webkit-justify-content: center;
           justify-content: center;
+  padding-left: 18rpx;
+  box-sizing: border-box;
+}
+.ullist > .items:nth-child(2n+1) {
+  border-right: 2rpx solid #EFEFEF;
+}
+.iconBox {
+  width: 62rpx;
+  height: 62rpx;
+  -webkit-border-radius: 50%;
+          border-radius: 50%;
+  background-color: #DEECFF;
+}
+.titleBox {
+  padding-left: 12rpx;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
   -webkit-flex-direction: column;
           flex-direction: column;
+  position: relative;
 }
-.centerBox {
-  width: 100%;
-}
-.loginText {
+.itemTitle, .itemDle {
   color: #333;
-  font-size: 56rpx;
   font-weight: bold;
-  letter-spacing: 8rpx;
+  font-size: 28rpx;
 }
-.photoBox, .codeBox {
+.itemDle {
+  color: #A2A2A2;
+  font-weight: 400;
+  margin-top: 18rpx;
+}
+.gzhBox {
+  width: 694rpx;
+  background-color: #484848;
+  height: 94rpx;
+  -webkit-border-radius: 47rpx;
+          border-radius: 47rpx;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
+  position: fixed;
+  bottom: 80rpx;
   -webkit-box-align: center;
   -webkit-align-items: center;
           align-items: center;
-  margin-bottom: 62rpx;
-  border-bottom: 2rpx solid #dedede;
-  padding-bottom: 20rpx;
+  padding: 0 32rpx;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
 }
-.photoBox {
-  margin-top: 100rpx;
+.gzhBox text {
+  color: #FFFFFF;
+  font-size: 28rpx;
 }
-.loginicon {
-  font-size: 46rpx;
-  color: #5897E3;
-}
-.photoBox > .loginicon {
-  font-size: 52rpx;
-}
-.photoBox > input, .codeBox > input {
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-          flex: 1;
-  margin-left: 32rpx;
-  font-size: 32rpx;
-}
-.loginBtn {
-  width: 609rpx;
-  height: 90rpx;
-  -webkit-border-radius: 20rpx;
-          border-radius: 20rpx;
-  background-color: #5393FD;
+.gzhBox .close {
+  -webkit-flex-shrink: 0;
+          flex-shrink: 0;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -97,13 +161,13 @@
   -webkit-justify-content: center;
           justify-content: center;
   color: #FFFFFF;
-  font-size: 34rpx;
-  letter-spacing: 8rpx;
-  margin-top: 140rpx;
+  font-size: 46rpx;
 }
-.loading {
-  width: 100vw;
-  height: 100vh;
+.gzhBox .gzBtn {
+  width: 165rpx;
+  height: 60rpx;
+  -webkit-border-radius: 30rpx;
+          border-radius: 30rpx;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -113,10 +177,33 @@
   -webkit-box-pack: center;
   -webkit-justify-content: center;
           justify-content: center;
-  position: fixed;
+  color: #FFFFFF;
+  font-size: 26rpx;
+  margin: 0;
+  background-image: -webkit-gradient(linear, left top, right top, from(#5097E8), to(#377BFB));
+  background-image: -webkit-linear-gradient(left, #5097E8, #377BFB);
+  background-image: linear-gradient(to right, #5097E8, #377BFB);
+}
+.iconBox {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  font-size: 42rpx;
+  color: #5C96FC;
+}
+.linkbtn {
+  position: absolute;
+  z-index: 9;
+  width: 100%;
+  height: 100%;
   left: 0;
   top: 0;
-  background-color: #FFFFFF;
-  z-index: 99;
+  opacity: .01;
 }
 

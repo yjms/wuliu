@@ -33,8 +33,8 @@
 			<view class="ulItem">
 				<text>寄件方式</text>
 				<view class="right">
-					<view class="sbtn">官方取件</view>
-					<view class="sbtn">服务点自寄</view>
+					<view class="sbtn" :class="qjType==1?'qjact':''" @click="()=>{this.qjType=1}">官方取件</view>
+					<view class="sbtn" :class="qjType==2?'qjact':''" @click="()=>{this.qjType=2}">服务点自寄</view>
 				</view>
 			</view>
 			
@@ -93,7 +93,8 @@
 		},
 		data() {
 			return {
-				showType:0
+				showType:0, // 默认不显示弹窗
+				qjType:1,// 默认取件方式
 			}
 		},
 		methods: {
@@ -224,6 +225,9 @@
 			align-items: center;
 			justify-content: space-between;
 		}
+		>text{
+			font-size: 30upx;
+		}
 		.ulItem:not(:last-child){
 			border-bottom: 2upx solid #dedede;
 		}
@@ -233,7 +237,7 @@
 			align-items: center;
 			justify-content: flex-end;
 			.sbtn{
-				font-size: 32upx;
+				font-size: 28upx;
 				padding: 8upx 20upx;
 				border: 1upx solid #dedede;
 				margin-right: 18upx;
@@ -243,6 +247,7 @@
 	}
 	.ulItem>.right>.selectTxt{
 		margin-right: 18upx;
+		font-size: 26upx;
 	}
 	.ulItem>.right>.selectIcon{
 		margin-right: 20upx;
@@ -275,5 +280,9 @@
 		color: $all-font-Hcolor;
 		font-size: 32upx;
 		padding-left: 20upx;
+	}
+	.ulItem>.right>view.qjact{
+		color: $all-font-Tcolor;
+		border: 1upx solid $all-font-Tcolor;
 	}
 </style>
