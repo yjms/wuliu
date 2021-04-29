@@ -8,7 +8,7 @@
 				<view class="iconBox iconfont icon-yuyue">
 					
 				</view>
-				<view class="titleBox">
+				<view class="titleBox" @click="jump(1)">
 				   <text class="itemTitle">预约寄件</text>
 				   <text class="itemDle">支持2小时上门取件</text>
 				</view>
@@ -18,7 +18,7 @@
 				<view class="iconBox iconfont icon-B">
 					
 				</view>
-				<view class="titleBox">
+				<view class="titleBox" @click="jump(2)">
 				   <text class="itemTitle">查询快件</text>
 				   <text class="itemDle">支持2小时上门取件</text>
 				</view>
@@ -28,7 +28,7 @@
 				<view class="iconBox iconfont icon-tubiao_kucun">
 					
 				</view>
-				<view class="titleBox">
+				<view class="titleBox" @click="jump(3)">
 				   <text class="itemTitle">查看库存</text>
 				   <text class="itemDle">支持2小时上门取件</text>
 				</view>
@@ -38,7 +38,7 @@
 				<view class="iconBox iconfont icon-mingxi">
 					
 				</view>
-				<view class="titleBox">
+				<view class="titleBox" @click="jump(4)">
 				   <text class="itemTitle">发货明细</text>
 				   <text class="itemDle">支持2小时上门取件</text>
 				</view>
@@ -47,7 +47,7 @@
 				<view class="iconBox iconfont icon-lianxiwomen">
 					
 				</view>
-				<view class="titleBox">
+				<view class="titleBox" @click="linkOur">
 				   <text class="itemTitle">联系我们</text>
 				   <text class="itemDle">支持2小时上门取件</text>
 				</view>
@@ -63,7 +63,6 @@
 </template>
 
 <script>
-	import tools from "../../static/tool.js"
 	export default {
 		data() {
 			return {
@@ -74,8 +73,25 @@
 
 		},
 		methods: {
+			jump(nav){
+				console.log(nav);
+				if(nav == 2){
+					this.$tool.jump_switch("/pages/checkSite/checkSite")
+					return
+				}
+				let arr = ["/pages/appoint/appoint",
+						,`/pages/orderlist/orderlist?ix=${nav}`,
+						`/pages/orderlist/orderlist?ix=${nav}`
+				]
+				this.$tool.jump_nav(arr[nav - 1]);
+			},
 			jump_nav(){
 				tools.jump_nav('/pages/checklogistics/checklogistics');
+			},
+			linkOur(){
+				uni.makePhoneCall({
+				    phoneNumber: '0738-6608' //仅为示例
+				});
 			}
 		}
 	}

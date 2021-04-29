@@ -135,25 +135,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-var _tool = _interopRequireDefault(__webpack_require__(/*! ../../static/tool.js */ 17));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
 //
 //
 //
@@ -170,7 +152,49 @@ var _tool = _interopRequireDefault(__webpack_require__(/*! ../../static/tool.js 
 //
 //
 //
-var _default = { data: function data() {return { title: '这是首页' };}, onLoad: function onLoad() {}, methods: { login: function login() {_tool.default.showTip("登录成功");_tool.default.jump_red("/pages/home/home");}, jump_nav: function jump_nav() {_tool.default.jump_nav('/pages/checklogistics/checklogistics');} } };exports.default = _default;
+//
+//
+//
+var _default =
+{
+  data: function data() {
+    return {
+      title: '这是首页',
+      userCount: "",
+      userPsw: "",
+      isloading: true };
+
+  },
+  created: function created() {
+    if (this.$tool.getstorage("lg")) {
+      this.$tool.jump_switch("/pages/home/home");
+    } else {
+      this.isloading = false;
+    }
+  },
+  onLoad: function onLoad() {
+
+  },
+  methods: {
+    login: function login() {var _this = this;
+      console.log(this.userCount.trim());
+      if (!this.userCount.trim()) {
+        this.$tool.showTip("请输入账号！");
+        return;
+      }
+      if (!this.userPsw.trim()) {
+        this.$tool.showTip("请输入密码！");
+        return;
+      }
+      this.$tool.showTip("登录成功");
+      this.$tool.setstorage("lg", true);
+      setTimeout(function () {
+        _this.$tool.jump_switch("/pages/home/home");
+      }, 200);
+      0;},
+    jump_nav: function jump_nav() {
+      this.$tool.jump_nav('/pages/checklogistics/checklogistics');
+    } } };exports.default = _default;
 
 /***/ }),
 /* 17 */,

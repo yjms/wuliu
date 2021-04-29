@@ -26,6 +26,14 @@
             "path" : "pages/address/address",
             "style" : {}
         }
+        ,{
+            "path" : "pages/editaddress/editaddress",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/orderlist/orderlist",
+            "style" : {}
+        }
     ],
 	"tabBar":{
 		"color":"#888",

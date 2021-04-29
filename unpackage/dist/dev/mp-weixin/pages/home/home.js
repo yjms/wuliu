@@ -130,72 +130,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-var _tool = _interopRequireDefault(__webpack_require__(/*! ../../static/tool.js */ 17));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
 //
 //
 //
@@ -259,7 +194,38 @@ var _tool = _interopRequireDefault(__webpack_require__(/*! ../../static/tool.js 
 //
 //
 //
-var _default = { data: function data() {return { title: '这是首页' };}, onLoad: function onLoad() {}, methods: { jump_nav: function jump_nav() {_tool.default.jump_nav('/pages/checklogistics/checklogistics');} } };exports.default = _default;
+var _default =
+{
+  data: function data() {
+    return {
+      title: '这是首页' };
+
+  },
+  onLoad: function onLoad() {
+
+  },
+  methods: {
+    jump: function jump(nav) {
+      console.log(nav);
+      if (nav == 2) {
+        this.$tool.jump_switch("/pages/checkSite/checkSite");
+        return;
+      }
+      var arr = ["/pages/appoint/appoint",, "/pages/orderlist/orderlist?ix=".concat(
+      nav), "/pages/orderlist/orderlist?ix=".concat(
+      nav)];
+
+      this.$tool.jump_nav(arr[nav - 1]);
+    },
+    jump_nav: function jump_nav() {
+      tools.jump_nav('/pages/checklogistics/checklogistics');
+    },
+    linkOur: function linkOur() {
+      uni.makePhoneCall({
+        phoneNumber: '0738-6608' //仅为示例
+      });
+    } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

@@ -4,9 +4,9 @@
 			<view class="headRow">
 				<view class="jIcon">寄</view>
 				<view class="jInfo">
-					<view class="infobox">点击添加寄件人点击添加寄件人点击添加寄件人点击添加寄件人点击添加寄件人点击添加寄件人点击添加寄件人点击添加寄件人点击添加寄件人点击添加寄件人点击添加寄件人  </view>
+					<view class="infobox" @click="jump_nav(1)">点击添加寄件人点击添加寄件人点击添加寄件人点击添加寄件人点击添加寄件人点击添加寄件人点击添加寄件人点击添加寄件人点击添加寄件人点击添加寄件人点击添加寄件人  </view>
 					<text class="rigIcon iconfont icon-youjiantou-copy"></text>	
-					<view class="dzIcon">
+					<view class="dzIcon" @click="jump_nav(3)">
 						<text class="iconfont icon-dizhi addIcon"></text>
 						<text>地址簿</text>
 					</view>	
@@ -19,9 +19,9 @@
 			<view class="headRow">
 				<view class="sIcon">收</view>
 				<view class="jInfo">
-					<view class="infobox">点击添加寄件人点击添加寄件人点击添加寄件人点击添加寄件人点击添加寄件人点击添加寄件人点击添加寄件人点击添加寄件人点击添加寄件人点击添加寄件人点击添加寄件人  </view>
+					<view class="infobox"  @click="jump_nav(2)">点击添加寄件人点击添加寄件人点击添加寄件人点击添加寄件人点击添加寄件人点击添加寄件人点击添加寄件人点击添加寄件人点击添加寄件人点击添加寄件人点击添加寄件人  </view>
 					<text class="rigIcon iconfont icon-youjiantou-copy"></text>	
-					<view class="dzIcon">
+					<view class="dzIcon" @click="jump_nav(4)">
 						<text class="iconfont icon-dizhi addIcon"></text>
 						<text>地址簿</text>
 					</view>	
@@ -45,7 +45,7 @@
 				</view>
 			</view>
 			
-			<view class="ulItem">
+			<view class="ulItem" @click="showPop(1)">
 				<text>物品 & 重量 & 体积</text>
 				<view class="right">
 					<text class="selectTxt">请选择</text>
@@ -53,7 +53,7 @@
 				</view>
 			</view>
 			
-			<view class="ulItem">
+			<view class="ulItem" @click="showPop(3)">
 				<text>对快递员说</text>
 				<view class="right">
 					<text class="selectTxt">有什么对快递员说的吗</text>
@@ -61,7 +61,7 @@
 				</view>
 			</view>
 			
-			<view class="ulItem">
+			<view class="ulItem" @click="showPop(2)">
 				<text>保价</text>
 				<view class="right">
 					<text class="selectTxt">若物品价值超过500元建议报价！</text>
@@ -78,7 +78,7 @@
 				提交
 			</view>
 		</view>
-		<Footpop></Footpop>
+		<Footpop :showType="showType"></Footpop>
 </view>
 </template>
 <!-- @font-face {
@@ -93,11 +93,24 @@
 		},
 		data() {
 			return {
-				
+				showType:0
 			}
 		},
 		methods: {
-			
+			showPop(ix){
+				// 显示不同弹窗
+				this.showType = ix;
+			},
+			jump_nav(ix){
+				// 跳转到不同的页面并携带参数
+				let arr = [
+					`/pages/editaddress/editaddress?ix=${ix}`,
+					`/pages/editaddress/editaddress?ix=${ix}`,
+					`/pages/address/address?ix=${ix}`,
+					`/pages/address/address?ix=${ix}`
+					]
+				this.$tool.jump_nav(arr[ix-1]);
+			}
 		}
 	}
 </script>
@@ -147,11 +160,11 @@
 	}
 	.infobox{
 		flex: 1;
-		font-size: 32upx;
+		font-size: 28upx;
 		color: #999;
 		letter-spacing: 4upx;
 		padding-left: 20upx;
-		height: 75%;
+		height: 70%;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		display: -webkit-box;

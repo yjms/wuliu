@@ -2,10 +2,10 @@
 	<view class="whole">
 		<view class="bgWhile setbuttom">
 			<view class="header row">
-				<view class="jjadd tabAct">
+				<view class="jjadd" :class="currTab==1?'tabAct':''" @click="changTab(1)">
 					寄件地址
 				</view>
-				<view class="sjadd">
+				<view class="sjadd" :class="currTab==2?'tabAct':''" @click="changTab(2)">
 					收件地址
 				</view>
 			</view>
@@ -14,8 +14,10 @@
 				<input type="text" placeholder="输入姓名、电话、地址快速查找" />
 			</view>
 		</view>
-		
-		<view class="ullist">
+		<view class="nodataBox" v-if="!hasData">
+			<Nodata></Nodata>
+		</view>
+		<view class="ullist" v-if="hasData">
 			
 			<view class="ulitem row bgWhile flex_col">
 				<view class="leftinfo">
@@ -62,16 +64,29 @@
 </template>
 
 <script>
+	import Nodata from "@/pages/components/nodata.vue"
 	export default {
+		components:{
+			Nodata
+		},
 		data() {
 			return {
-				
-			};
+				hasData:true,// 是否有数据	
+				currTab:1
+			}
+		},
+		mounted(){
+			
+		},
+		methods:{
+			changTab(tab){
+				this.currTab = tab;
+			}
 		}
 	}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	// 公共样式
 	.bgWhile{
 		background-color: #FFFFFF;
@@ -99,6 +114,8 @@
 		width: 100vw;
 		height: 100vh;
 		background-color: $self-body-bgColor;
+		display: flex;
+		flex-direction: column;
 	}
 	.header{
 		display: flex;
@@ -205,5 +222,10 @@
 	.delBox{
 		margin: 0;
 		border: none;
+	}
+	.nodataBox{
+		flex: 1;
+		width:100vw;
+		// background-color: red;
 	}
 </style>

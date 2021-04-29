@@ -1,15 +1,15 @@
 <template>
-	<view class="whole" name="Footpop">
-		<view class="footBody">
+	<view class="whole" name="Footpop" v-if="showType>0"  @click="hidePop">
+		<view class="footBody" @click.stop>
 			
 			<view class="header">
-				<text>选择物品类型重量和体积</text>
-				<text class="iconfont icon-guanbi close"></text>
+				<text>{{titleList[showType-1]}}</text>
+				<text class="iconfont icon-guanbi close" @click="hidePop"></text>
 			</view>
 			<!-- 寄件备注 -->
-			<view class="popBody">
+			<view class="popBody" v-if="showType==3">
 				<view class="ulremark row">
-					<view class="rmkItem" v-for="item in remark">
+					<view class="rmkItem" v-for="item in remark" :key="item">
 						{{item}}
 					</view>
 				</view>
@@ -19,7 +19,7 @@
 				</view>
 			</view>
 			<!-- 保价 -->
-			<view class="popBody" v-if="false">
+			<view class="popBody" v-if="showType==2">
 				<view class="priceBox row flex_col">
 					<text>保价金额</text>
 					<view class="priceIpt flex_col">
@@ -44,13 +44,13 @@
 				</view>
 			</view>
 			
-			<view class="popBody" v-if="false">
+			<view class="popBody" v-if="showType==1">
 					<view class="ulTitle row">
 						选择物品类型
 					</view>
 					
 					<view class="ullist row">
-						<view class="wpitem" v-for="item in things">
+						<view class="wpitem" v-for="item in things" :key="item">
 							{{item}}
 						</view>
 					</view>
@@ -97,18 +97,28 @@
 
 <script>
 	export default{
+		props:{
+			showType:{
+				type:String,
+				default:"0"
+			}
+		},
 		name:"Footpop",
 		data(){
 			return{
 				things:["文件","电子类产品","生活用品","服饰","生鲜","食品","易碎品","化妆品","药品","其他"],
 				remark:["请带纸箱","需要爬楼","缺文件袋","来前电话","请带面单","	请带胶袋"],
+				titleList:['选择物品类型重量和体积','保价','对快递员说']
 			}
 		},
 		mounted(){
 			
 		},
 		methods:{
-			
+			hidePop(){
+				this.$parent.showType = 0;
+				// console.log(this.showType) 
+			}
 		}
 		
 	}
@@ -370,4 +380,5 @@
 			color: $all-font-Hcolor;
 		}
 	}
+	
 </style>

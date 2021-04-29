@@ -1,38 +1,62 @@
 <template>
 	<view class="whole">
-		<view class="centerBox">
+		<view class="centerBox" v-show="!isloading">
 			<text class="loginText">登录</text>
 			<view class="photoBox">
 				<text class="iconfont icon-zhanghao loginicon"></text>
-				<input type="text"  placeholder="账号"/>
+				<input type="text"  placeholder="账号" v-model="userCount"/>
 			</view>
 			<view class="codeBox">
 				<text class="iconfont icon-mima loginicon"></text>
-				<input type="text" placeholder="密码" />
+				<input type="password" placeholder="密码"  v-model="userPsw"/>
 			</view>
 			<button class="loginBtn" @click="login">登录</button>
+		</view>
+		<view class="loading" v-show="isloading">
+			<image src="../../static/image/loading.gif" mode="widthFix"></image>
 		</view>
 	</view>
 </template>
 
 <script>
-	import tools from "../../static/tool.js"
 	export default {
 		data() {
 			return {
-				title: '这是首页'
+				title: '这是首页',
+				userCount:"",
+				userPsw:"",
+				isloading:true
+			}
+		},
+		created(){
+			if(this.$tool.getstorage("lg")){
+				this.$tool.jump_switch("/pages/home/home")
+			}else{
+				this.isloading = false;
 			}
 		},
 		onLoad() {
-
+			
 		},
 		methods: {
 			login(){
-				tools.showTip("登录成功");
-				tools.jump_red("/pages/home/home")
-			},
+				console.log(this.userCount.trim());
+				if(!this.userCount.trim()) {
+					this.$tool.showTip("请输入账号！") 
+					return
+				}
+				if(!this.userPsw.trim()){
+					this.$tool.showTip("请输入密码！")
+					return
+				}
+				this.$tool.showTip("登录成功");
+				this.$tool.setstorage("lg",true);
+				setTimeout(()=>{
+					this.$tool.jump_switch("/pages/home/home");
+				},200)
+0			},
 			jump_nav(){
-				tools.jump_nav('/pages/checklogistics/checklogistics');
+				this.$tool.jump_nav('/pages/checklogistics/checklogistics');
 			}
 		}
 	}
@@ -92,5 +116,17 @@
 		font-size: 34upx;
 		letter-spacing: 8upx;
 		margin-top: 140upx;
+	}
+	.loading{
+		width: 100vw;
+		height: 100vh;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		position: fixed;
+		left: 0;
+		top: 0;
+		background-color: #FFFFFF;
+		z-index: 99;
 	}
 </style>

@@ -8036,6 +8036,7 @@ function normalizeComponent (
 
   }_createClass(tools, [{ key: "jump_nav", value: function jump_nav(
     url) {
+      console.log("查看url", url);
       uni.navigateTo({ // 不请空页面栈跳转
         url: "".concat(url),
         animationType: 'pop-in',
@@ -8071,12 +8072,18 @@ function normalizeComponent (
         url: "".concat(url) });
 
     } }, { key: "showTip", value: function showTip(
-    val) {var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "none";
+    val) {var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "none"; // 轻提示  默认没图标
       uni.showToast({
         title: val,
         icon: type,
         mask: true });
 
+    } }, { key: "setstorage", value: function setstorage()
+    {var key = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";var val = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : ""; // 存缓存
+      uni.setStorageSync(key, val);
+    } }, { key: "getstorage", value: function getstorage(
+    key) {
+      return uni.getStorageSync(key);
     } }]);return tools;}();var _default =
 
 {
@@ -8086,7 +8093,9 @@ function normalizeComponent (
   jump_switch: new tools().jump_switch,
   jump_back: new tools().jump_back,
   jump_pre: new tools().jump_pre,
-  showTip: new tools().showTip };exports.default = _default;
+  showTip: new tools().showTip,
+  setstorage: new tools().setstorage,
+  getstorage: new tools().getstorage };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ })

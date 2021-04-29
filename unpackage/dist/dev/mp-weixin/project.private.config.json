@@ -19,12 +19,6 @@
           "scene": null
         },
         {
-          "name": "pages/home/home",
-          "pathName": "pages/home/home",
-          "query": "",
-          "scene": null
-        },
-        {
           "name": "预约寄件页面",
           "pathName": "pages/appoint/appoint",
           "query": "",
@@ -33,6 +27,31 @@
         {
           "name": "地址簿",
           "pathName": "pages/address/address",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "编辑地址页面",
+          "pathName": "pages/editaddress/editaddress",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "列表页面",
+          "pathName": "pages/checkSite/checkSite",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "订单列表",
+          "pathName": "pages/orderlist/orderlist",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/orderlist/orderlist",
+          "pathName": "pages/orderlist/orderlist",
+          "query": "",
           "scene": null
         }
       ]

@@ -24,20 +24,20 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.bgWhile {
+.bgWhile.data-v-db675620 {
   background-color: #FFFFFF;
 }
-.row {
+.row.data-v-db675620 {
   width: 100%;
   padding: 0 28rpx;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
 }
-.row1 {
+.row1.data-v-db675620 {
   width: calc(100vw - 56rpx);
   margin: 0 auto;
 }
-.flex_row {
+.flex_row.data-v-db675620 {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -47,7 +47,7 @@
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
 }
-.flex_col {
+.flex_col.data-v-db675620 {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -57,12 +57,19 @@
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
 }
-.whole {
+.whole.data-v-db675620 {
   width: 100vw;
   height: 100vh;
   background-color: #F2F2F2;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
 }
-.header {
+.header.data-v-db675620 {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -73,7 +80,7 @@
   -webkit-align-items: center;
           align-items: center;
 }
-.header > .jjadd, .header .sjadd {
+.header > .jjadd.data-v-db675620, .header .sjadd.data-v-db675620 {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -88,7 +95,7 @@
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
 }
-.header .tabAct::before {
+.header .tabAct.data-v-db675620::before {
   position: absolute;
   content: "";
   width: 100%;
@@ -96,32 +103,32 @@
   background-color: #5393FD;
   bottom: 0;
 }
-.header .tabAct {
+.header .tabAct.data-v-db675620 {
   position: relative;
   color: #5393FD;
 }
-.searchIpt {
+.searchIpt.data-v-db675620 {
   height: 64rpx;
   -webkit-border-radius: 38rpx;
           border-radius: 38rpx;
   background-color: #EBF0F1;
   padding: 0 24rpx;
 }
-.searchIpt text {
+.searchIpt text.data-v-db675620 {
   font-size: 50rpx;
   color: #888;
 }
-.searchIpt > input {
+.searchIpt > input.data-v-db675620 {
   -webkit-box-flex: 1;
   -webkit-flex: 1;
           flex: 1;
   margin-left: 16rpx;
   font-size: 30rpx;
 }
-.setbuttom {
+.setbuttom.data-v-db675620 {
   padding-bottom: 12rpx;
 }
-.ullist {
+.ullist.data-v-db675620 {
   margin-top: 10rpx;
   display: -webkit-box;
   display: -webkit-flex;
@@ -131,28 +138,28 @@
   -webkit-flex-direction: column;
           flex-direction: column;
 }
-.ullist .ulitem:not(:last-child) {
+.ullist .ulitem.data-v-db675620:not(:last-child) {
   border-bottom: 1rpx solid #dedede;
 }
-.ullist .ulitem {
+.ullist .ulitem.data-v-db675620 {
   width: 100%;
   height: 200rpx;
 }
-.ullist .leftinfo > .ltop {
+.ullist .leftinfo > .ltop.data-v-db675620 {
   width: 468rpx;
   margin-bottom: 18rpx;
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
           justify-content: space-between;
 }
-.ullist .leftinfo > .ltop text {
+.ullist .leftinfo > .ltop text.data-v-db675620 {
   font-size: 30rpx;
   color: #333;
 }
-.ullist .leftinfo > .ltop .photoTxt {
+.ullist .leftinfo > .ltop .photoTxt.data-v-db675620 {
   margin-left: 16rpx;
 }
-.ullist .leftinfo > .ltop .defaults {
+.ullist .leftinfo > .ltop .defaults.data-v-db675620 {
   width: 85rpx;
   height: 32rpx;
   -webkit-border-radius: 18rpx;
@@ -170,15 +177,15 @@
   font-size: 28rpx;
   color: #fff;
 }
-.leftinfo > .lcenter, .leftinfo > .lfoot {
+.leftinfo > .lcenter.data-v-db675620, .leftinfo > .lfoot.data-v-db675620 {
   font-size: 30rpx;
   color: #333;
   margin-bottom: 18rpx;
 }
-.leftinfo > .lfoot {
+.leftinfo > .lfoot.data-v-db675620 {
   margin: 0;
 }
-.editBox, .delBox {
+.editBox.data-v-db675620, .delBox.data-v-db675620 {
   margin-left: 20rpx;
   border: 1rpx solid #dedede;
   height: 60rpx;
@@ -197,8 +204,14 @@
   color: #5393FD;
   font-size: 44rpx;
 }
-.delBox {
+.delBox.data-v-db675620 {
   margin: 0;
   border: none;
+}
+.nodataBox.data-v-db675620 {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
+  width: 100vw;
 }
 

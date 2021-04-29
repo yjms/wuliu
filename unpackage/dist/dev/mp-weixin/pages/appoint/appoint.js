@@ -130,7 +130,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var Footpop = function Footpop() {__webpack_require__.e(/*! require.ensure | pages/components/Footpop */ "pages/components/Footpop").then((function () {return resolve(__webpack_require__(/*! ../components/Footpop.vue */ 54));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var Footpop = function Footpop() {__webpack_require__.e(/*! require.ensure | pages/components/Footpop */ "pages/components/Footpop").then((function () {return resolve(__webpack_require__(/*! ../components/Footpop.vue */ 66));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 
 
 
@@ -224,11 +224,25 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     Footpop: Footpop },
 
   data: function data() {
-    return {};
-
+    return {
+      showType: 0 };
 
   },
-  methods: {} };exports.default = _default;
+  methods: {
+    showPop: function showPop(ix) {
+      // 显示不同弹窗
+      this.showType = ix;
+    },
+    jump_nav: function jump_nav(ix) {
+      // 跳转到不同的页面并携带参数
+      var arr = ["/pages/editaddress/editaddress?ix=".concat(
+      ix), "/pages/editaddress/editaddress?ix=".concat(
+      ix), "/pages/address/address?ix=".concat(
+      ix), "/pages/address/address?ix=".concat(
+      ix)];
+
+      this.$tool.jump_nav(arr[ix - 1]);
+    } } };exports.default = _default;
 
 /***/ }),
 

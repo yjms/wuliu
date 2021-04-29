@@ -130,7 +130,51 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -176,11 +220,40 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 var _default =
 {
   data: function data() {
-    return {};
-
-
+    return {
+      currTab: 1, //默认显示今天的单号
+      timeTab: 1, // 默认选择今天查询 
+      searchStatus: false, // 是否是搜索状态
+      keyword: "", // 搜索关键字
+      hasData: true // 默认没数据
+    };
   },
-  methods: {} };exports.default = _default;
+  onLoad: function onLoad() {
+    console.log(6666);
+  },
+  methods: {
+    changeTab: function changeTab(tab, type) {
+      type == "time" ? this.timeTab = tab : this.currTab = tab;
+    },
+    search: function search(type) {
+      type == 1 ? this.searchStatus = true : this.searchStatus = false;
+      if (type == 3) {
+        var str = this.keyword.trim();
+        if (str)
+        console.log(this.keyword);
+      }
+    },
+    scancode: function scancode() {
+      // 只允许通过相机扫码
+      uni.scanCode({
+        onlyFromCamera: true,
+        success: function success(res) {
+          console.log('条码类型：' + res.scanType);
+          console.log('条码内容：' + res.result);
+        } });
+
+    } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

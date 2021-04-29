@@ -5,7 +5,9 @@
     "pages/checkSite/checkSite",
     "pages/home/home",
     "pages/appoint/appoint",
-    "pages/address/address"
+    "pages/address/address",
+    "pages/editaddress/editaddress",
+    "pages/orderlist/orderlist"
   ],
   "subPackages": [],
   "window": {

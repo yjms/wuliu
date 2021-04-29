@@ -24,6 +24,39 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
+.bgWhile {
+  background-color: #FFFFFF;
+}
+.row {
+  width: 100%;
+  padding: 0 28rpx;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+.row1 {
+  width: calc(100vw - 56rpx);
+  margin: 0 auto;
+}
+.flex_row {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+.flex_col {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
 .whole {
   width: 100vw;
   height: 100vh;
@@ -179,5 +212,156 @@
 .saoma {
   font-size: 46rpx;
   margin-left: 18rpx;
+}
+.header > .searchTxt {
+  color: #888;
+  font-size: 30rpx;
+  margin-left: 2rpx;
+  border: 8rpx solid #FFFFFF;
+}
+.setbg {
+  background-color: #F2F2F2;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
+}
+.ydList {
+  width: 100%;
+  height: calc(100vh - 350rpx);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  margin-top: 18rpx;
+}
+.yditem {
+  width: 100%;
+  padding: 24rpx 0 18rpx 24rpx;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  margin-bottom: 18rpx;
+  font-size: 28rpx;
+}
+.yditem .icon-fuzhicopy12 {
+  font-size: 34rpx;
+  padding-left: 6rpx;
+  color: #888;
+}
+.yditem > .ydHeader {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+}
+.arive {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+  padding: 0 20rpx;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  margin: 18rpx 0;
+}
+.arive > view {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+.arrcenter > image {
+  width: 120rpx;
+  height: 20rpx;
+  object-fit: cover;
+}
+.setmar {
+  margin-top: 10rpx;
+  font-weight: bold;
+}
+.towRow {
+  color: #888;
+  margin-top: 10rpx;
+}
+.cityName {
+  color: #000;
+  font-size: 36rpx;
+}
+.statusBox {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  color: #777;
+}
+.statusBox .rigTxt {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
+  text-align: justify;
+  padding: 0 18rpx;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+.shink {
+  -webkit-flex-shrink: 0;
+          flex-shrink: 0;
+}
+.timebox {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  color: #777;
+  margin: 18rpx 0;
+  border-bottom: 1rpx solid #dedede;
+  padding-bottom: 18rpx;
+}
+.ydFoot {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+          justify-content: flex-end;
+}
+.ydFoot .share, .ydFoot .del {
+  width: 160rpx;
+  height: 60rpx;
+  border: 1rpx solid #dedede;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  color: #666;
+  -webkit-border-radius: 35rpx;
+          border-radius: 35rpx;
+  margin-right: 18rpx;
+}
+.ydFoot .del {
+  margin-right: 26rpx;
 }
 

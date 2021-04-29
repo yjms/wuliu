@@ -3,6 +3,7 @@ class tools {
 
 	}
 	jump_nav(url) {
+		console.log("查看url",url);
 		uni.navigateTo({ // 不请空页面栈跳转
 			url: `${url}`,
 			animationType: 'pop-in',
@@ -38,12 +39,18 @@ class tools {
 			url: `${url}`
 		});
 	}
-	showTip(val,type="none"){
+	showTip(val,type="none"){ // 轻提示  默认没图标
 		uni.showToast({
 			title:val,
 			icon:type,
 			mask:true
 		})
+	}
+	setstorage(key="",val=""){// 存缓存
+		uni.setStorageSync(key,val);	
+	}
+	getstorage(key){
+		return uni.getStorageSync(key)
 	}
 }
 export default {
@@ -53,5 +60,7 @@ export default {
 	jump_switch: (new tools).jump_switch,
 	jump_back: (new tools).jump_back,
 	jump_pre: (new tools).jump_pre,
-	showTip:(new tools).showTip
+	showTip:(new tools).showTip,
+	setstorage:(new tools).setstorage,
+	getstorage:(new tools).getstorage
 }
