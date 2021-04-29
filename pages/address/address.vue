@@ -35,8 +35,8 @@
 						还是经济特区
 					</view>	
 				</view>
-				<view class="editBox iconfont icon-bianjimian"></view>
-				<view class="delBox iconfont icon-shanchu"></view>
+				<view class="editBox iconfont icon-bianjimian" @click="editAddress"></view>
+				<view class="delBox iconfont icon-shanchu" @click="delAddress"></view>
 			</view>
 			
 			<view class="ulitem row bgWhile flex_col">
@@ -55,8 +55,8 @@
 						还是经济特区
 					</view>	
 				</view>
-				<view class="editBox iconfont icon-bianjimian"></view>
-				<view class="delBox iconfont icon-shanchu"></view>
+				<view class="editBox iconfont icon-bianjimian" @click="editAddress"></view>
+				<view class="delBox iconfont icon-shanchu" @click="delAddress"></view>
 			</view>
 			
 		</view>
@@ -81,6 +81,14 @@
 		methods:{
 			changTab(tab){
 				this.currTab = tab;
+			},
+			editAddress(){
+				// 编辑地址
+				this.$tool.jump_nav("/pages/editaddress/editaddress")
+			},
+			delAddress(){
+				// 删除地址
+				console.log("删除地址")
 			}
 		}
 	}

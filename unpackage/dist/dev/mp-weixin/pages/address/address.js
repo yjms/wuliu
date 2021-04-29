@@ -213,6 +213,14 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
   methods: {
     changTab: function changTab(tab) {
       this.currTab = tab;
+    },
+    editAddress: function editAddress() {
+      // 编辑地址
+      this.$tool.jump_nav("/pages/editaddress/editaddress");
+    },
+    delAddress: function delAddress() {
+      // 删除地址
+      console.log("删除地址");
     } } };exports.default = _default;
 
 /***/ }),
