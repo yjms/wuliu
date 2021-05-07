@@ -4,7 +4,7 @@
 			<image src="../../static/image/banner.jpg"></image>
 		</view>
 		<view class="ullist">
-			<view class="items">
+		<!-- 	<view class="items">
 				<view class="iconBox iconfont icon-yuyue">
 					
 				</view>
@@ -12,15 +12,15 @@
 				   <text class="itemTitle">预约寄件</text>
 				   <text class="itemDle">支持2小时上门取件</text>
 				</view>
-			</view>
+			</view> -->
 			
 			<view class="items">
 				<view class="iconBox iconfont icon-B">
 					
 				</view>
 				<view class="titleBox" @click="jump(2)">
-				   <text class="itemTitle">查询快件</text>
-				   <text class="itemDle">支持2小时上门取件</text>
+				   <text class="itemTitle">查询物流</text>
+				   <text class="itemDle">快捷查询物流</text>
 				</view>
 			</view>
 			
@@ -30,7 +30,7 @@
 				</view>
 				<view class="titleBox" @click="jump(3)">
 				   <text class="itemTitle">查看库存</text>
-				   <text class="itemDle">支持2小时上门取件</text>
+				   <text class="itemDle">查看库存总量</text>
 				</view>
 			</view>
 			
@@ -40,7 +40,16 @@
 				</view>
 				<view class="titleBox" @click="jump(4)">
 				   <text class="itemTitle">发货明细</text>
-				   <text class="itemDle">支持2小时上门取件</text>
+				   <text class="itemDle">查询发货明细</text>
+				</view>
+			</view>
+			<view class="items">
+				<view class="iconBox iconfont icon-zhangdan">
+					
+				</view>
+				<view class="titleBox" @click="jump(5)">
+				   <text class="itemTitle">查看账单</text>
+				   <text class="itemDle">在线查看账单</text>
 				</view>
 			</view>
 			<view class="items">
@@ -55,34 +64,57 @@
 			</view>
 		</view>
 		<!-- 关注公众号的盒子 -->
-		<view class="gzhBox">
+	<!-- 	<view class="gzhBox">
 			<view class="close iconfont icon-guanbi"></view>
 			<text>关注公众号，随时接收物流消息</text>
 			<button type="default" class="gzBtn">去关注</button>
-		</view>
+		</view> -->
 	</view>
 </template>
 
 <script>
+	import {login} from "@/static/js/require.js"
 	export default {
+		 onShareAppMessage(res) {
+		    if (res.from === 'button') {// 来自页面内分享按钮
+		      console.log(res.target)
+		    }
+		    return {
+		      title: '华秀物流',
+		      path: '/pages/index/index'
+		    }
+		  },
 		data() {
 			return {
 				title: '这是首页'
 			}
 		},
+		created(){
+			// this.$tool.set
+		},
+		mounted(){
+			// console.log(this.$api)
+		},
 		onLoad() {
-
+			
 		},
 		methods: {
 			jump(nav){
 				console.log(nav);
-				if(nav == 2){
-					this.$tool.jump_switch("/pages/checkSite/checkSite")
+				let kh_id = this.$tool.getstorage("xykh_id");
+				if((nav == 3 || nav == 4 || nav == 5) && !kh_id ){ // 查看库存 和发货明细需要登录
+					this.$tool.jump_nav("/pages/login/login")
 					return
 				}
+				if(nav == 4 || nav == 5){
+					this.$tool.setstorage("pageType",nav);
+					this.$tool.jump_switch(`/pages/checkSite/checkSite?ix=${nav}`);
+					return;
+				}
 				let arr = ["/pages/appoint/appoint",
-						,`/pages/orderlist/orderlist?ix=${nav}`,
-						`/pages/orderlist/orderlist?ix=${nav}`
+						   `/pages/logisticsinfo/logisticsinfo`,
+						   `/pages/orderlist/orderlist?ix=${nav}`,
+						   `/pages/checkSite/checkSite?ix=${nav}`,
 				]
 				this.$tool.jump_nav(arr[nav - 1]);
 			},
@@ -93,7 +125,8 @@
 				uni.makePhoneCall({
 				    phoneNumber: '0738-6608' //仅为示例
 				});
-			}
+			},
+			
 		}
 	}
 </script>

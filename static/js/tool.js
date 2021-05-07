@@ -3,7 +3,7 @@ class tools {
 
 	}
 	jump_nav(url) {
-		console.log("查看url",url);
+		// console.log("查看url",url);
 		uni.navigateTo({ // 不请空页面栈跳转
 			url: `${url}`,
 			animationType: 'pop-in',

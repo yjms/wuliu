@@ -1,16 +1,21 @@
 <template>
 	<view class="whole">
 		<view class="centerBox" v-show="!isloading">
-			<text class="loginText">登录</text>
+			<text class="loginText">{{isforget?'修改密码':'登录'}}</text>
 			<view class="photoBox">
 				<text class="iconfont icon-zhanghao loginicon"></text>
 				<input type="text"  placeholder="账号" v-model="userCount"/>
 			</view>
 			<view class="codeBox">
 				<text class="iconfont icon-mima loginicon"></text>
-				<input type="password" placeholder="密码"  v-model="userPsw"/>
+				<input type="password" :placeholder="isforget?'输入旧密码':'密码'"  v-model="userPsw"/>
 			</view>
-			<button class="loginBtn" @click="login">登录</button>
+			<view class="codeBox" v-if="isforget">
+				<text class="iconfont icon-mima loginicon"></text>
+				<input type="password" :placeholder="isforget?'输入新密码':'密码'"  v-model="userPsw"/>
+			</view>
+			<button class="loginBtn" @click="login">{{isforget?'确认修改':'登录'}}</button>
+			<!-- <view class="forget">{{isforget?'去登录':'修改密码?'}}</view> -->
 		</view>
 		<view class="loading" v-show="isloading">
 			<image src="../../static/image/loading.gif" mode="widthFix"></image>
@@ -19,28 +24,35 @@
 </template>
 
 <script>
+	import {login} from "@/static/js/require.js" 
 	export default {
 		data() {
 			return {
 				title: '这是首页',
 				userCount:"",
 				userPsw:"",
-				isloading:true
+				isloading:false,
+				isforget:false,// 是否修改密码
+				newPsw:'',// 新密码
 			}
 		},
 		created(){
-			if(this.$tool.getstorage("lg")){
-				this.$tool.jump_switch("/pages/home/home")
-			}else{
-				this.isloading = false;
-			}
+			// if(this.$tool.getstorage("lg")){
+			// 	this.$tool.jump_switch("/pages/home/home")
+			// }else{
+			// 	this.isloading = false;
+			// }
 		},
 		onLoad() {
 			
 		},
 		methods: {
+			// forgetPsw(){
+			// 	// 忘记密码 或者 去登录
+			// 	this.isforget = !this.isforget;
+			// },
 			login(){
-				console.log(this.userCount.trim());
+				// 点击登录
 				if(!this.userCount.trim()) {
 					this.$tool.showTip("请输入账号！") 
 					return
@@ -49,12 +61,69 @@
 					this.$tool.showTip("请输入密码！")
 					return
 				}
-				this.$tool.showTip("登录成功");
-				this.$tool.setstorage("lg",true);
-				// setTimeout(()=>{
-				// 	this.$tool.jump_switch("/pages/home/home");
-				// },200)
-0			},
+				if(this.isforget){ // 修改密码
+					this.resetPsw();
+					return
+				}
+				let that = this;
+				if(!this.$tool.getstorage("openid")){
+					uni.login({
+						success(res){
+							console.log("code",res);
+							uni.request({
+								url:`https://api.weixin.qq.com/sns/jscode2session?appid=wx7175a3a88c7271b6&secret=678e3455b1f1cee4cf27fea5954c0100&js_code=${res.code}`,
+								header:{'content-type':'application/x-www-form-urlencoded'},
+								method:"POST",
+								success:res2=>{
+									 let openid = res2.data.openid;
+									 that.gologin(openid);
+									 that.$tool.setstorage("openid",openid);
+								}
+							})
+						}
+					})	
+				}else{
+					that.gologin(that.$tool.getstorage("openid"));
+				}
+              },
+			updataPsw(){
+				if(!this.newPsw.trim()){
+					this.$tool.showTip("请输入新密码！")
+					return
+				}
+				let dat = {
+					functionType:8,
+					xieyikehuID:'',
+					oldPwd:this.userPsw,
+					newPwd:this.newPsw
+				}
+				this.$api().then(res=>{
+					
+				})
+			},
+			gologin(openid){
+				let dat = {
+					functionType:4,
+					vipUserName:this.userCount,
+					vipPwd:this.userPsw,
+					weixinID:openid
+				}
+				login(dat).then(res=>{
+					// console.log("登录信息",res);
+					if(res.data.MsgID==1){
+						this.$tool.showTip("登录成功");
+						let rel = JSON.parse(res.data.Msg); 
+						this.$tool.setstorage("xykh_id",rel.ds[0].xykh_id);
+						setTimeout(()=>{
+							this.$tool.jump_back();
+						},500);
+					}else{
+						this.$tool.showTip("账号或密码错误！");
+					}
+				},err=>{
+					console.log("失败信息",err);
+				})
+			},
 			jump_nav(){
 				this.$tool.jump_nav('/pages/checklogistics/checklogistics');
 			}
@@ -128,5 +197,12 @@
 		top: 0;
 		background-color: #FFFFFF;
 		z-index: 99;
+	}
+	.forget{
+		text-align: right;
+		padding-right: 20upx;
+		margin-top: 40upx;
+		box-sizing: border-box;
+		color: $all-font-Tcolor;
 	}
 </style>

@@ -30,8 +30,7 @@
 .row {
   width: 100%;
   padding: 0 28rpx;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
 }
 .row1 {
   width: calc(100vw - 56rpx);
@@ -44,8 +43,7 @@
   -webkit-box-pack: center;
   -webkit-justify-content: center;
           justify-content: center;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
 }
 .flex_col {
   display: -webkit-box;
@@ -54,8 +52,7 @@
   -webkit-box-align: center;
   -webkit-align-items: center;
           align-items: center;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
 }
 .whole {
   width: 100vw;
@@ -84,8 +81,7 @@
   -webkit-box-align: center;
   -webkit-align-items: center;
           align-items: center;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
 }
 .iptBox {
   display: -webkit-box;
@@ -93,15 +89,13 @@
   display: flex;
   width: 615rpx;
   height: 70rpx;
-  -webkit-border-radius: 35rpx;
-          border-radius: 35rpx;
+  border-radius: 35rpx;
   background-color: #F7F7F7;
   -webkit-box-align: center;
   -webkit-align-items: center;
           align-items: center;
   padding: 0 28rpx;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
 }
 .iptBox > input {
   margin-left: 12rpx;
@@ -120,8 +114,7 @@
   -webkit-justify-content: space-around;
           justify-content: space-around;
   border-bottom: 2rpx solid #F2F2F2;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
 }
 .navBox > .navItem {
   display: -webkit-box;
@@ -172,8 +165,7 @@
   color: #333;
   height: 60rpx;
   font-size: 28rpx;
-  -webkit-border-radius: 30rpx;
-          border-radius: 30rpx;
+  border-radius: 30rpx;
   background-color: #F2F2F2;
 }
 .navTime > .active {
@@ -242,14 +234,12 @@
   -webkit-flex-direction: column;
           flex-direction: column;
   padding-top: 18rpx;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
 }
 .yditem {
   width: 100%;
   padding: 24rpx 0 18rpx 24rpx;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   margin-bottom: 18rpx;
   font-size: 28rpx;
 }
@@ -262,6 +252,8 @@
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
+  font-size: 36rpx;
+  font-weight: bold;
 }
 .arive {
   width: 100%;
@@ -272,8 +264,7 @@
   -webkit-justify-content: space-between;
           justify-content: space-between;
   padding: 0 20rpx;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   margin: 18rpx 0;
 }
 .arive > view {
@@ -321,8 +312,7 @@
           flex: 1;
   text-align: justify;
   padding: 0 18rpx;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
 }
 .shink {
   -webkit-flex-shrink: 0;
@@ -362,8 +352,7 @@
   -webkit-justify-content: center;
           justify-content: center;
   color: #666;
-  -webkit-border-radius: 35rpx;
-          border-radius: 35rpx;
+  border-radius: 35rpx;
   margin-right: 18rpx;
 }
 .ydFoot .del {

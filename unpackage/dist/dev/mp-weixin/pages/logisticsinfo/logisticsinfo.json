@@ -1,3 +1,5 @@
 {
-  "usingComponents": {}
+  "usingComponents": {
+    "nodata": "/pages/components/nodata"
+  }
 }

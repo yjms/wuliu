@@ -28,8 +28,7 @@
   width: 100vw;
   height: 100vh;
   padding: 0 46rpx;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -84,8 +83,7 @@
 .loginBtn {
   width: 609rpx;
   height: 90rpx;
-  -webkit-border-radius: 20rpx;
-          border-radius: 20rpx;
+  border-radius: 20rpx;
   background-color: #5393FD;
   display: -webkit-box;
   display: -webkit-flex;
@@ -118,5 +116,12 @@
   top: 0;
   background-color: #FFFFFF;
   z-index: 99;
+}
+.forget {
+  text-align: right;
+  padding-right: 20rpx;
+  margin-top: 40rpx;
+  box-sizing: border-box;
+  color: #5393FD;
 }
 

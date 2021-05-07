@@ -30,8 +30,7 @@
   background-color: #F2F2F2;
 }
 .header.data-v-59bd7eec {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   width: 100%;
   background-color: #FFFFFF;
   display: -webkit-box;
@@ -53,14 +52,12 @@
   display: -webkit-flex;
   display: flex;
   padding-left: 20rpx;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
 }
 .jIcon.data-v-59bd7eec, .sIcon.data-v-59bd7eec {
   width: 60rpx;
   height: 60rpx;
-  -webkit-border-radius: 50%;
-          border-radius: 50%;
+  border-radius: 50%;
   color: #FFFFFF;
   background-color: #227DF6;
   display: -webkit-box;
@@ -141,8 +138,7 @@
           align-items: center;
   padding-left: 30rpx;
   width: 100%;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
 }
 .headCenter > text.data-v-59bd7eec {
   color: #999;
@@ -166,8 +162,7 @@
   -webkit-box-direction: normal;
   -webkit-flex-direction: column;
           flex-direction: column;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   background-color: #FFFFFF;
   color: #666;
   font-size: 34rpx;
@@ -210,8 +205,7 @@
   padding: 8rpx 20rpx;
   border: 1rpx solid #dedede;
   margin-right: 18rpx;
-  -webkit-border-radius: 30rpx;
-          border-radius: 30rpx;
+  border-radius: 30rpx;
 }
 .ulItem > .right > .selectTxt.data-v-59bd7eec {
   margin-right: 18rpx;

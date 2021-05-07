@@ -1,7 +1,10 @@
 import Vue from 'vue'
 import App from './App'
-import tools from "@/static/tool.js"
+import tools from "@/static/js/tool.js"
+import {login} from "@/static/js/require.js"
+// import
 Vue.prototype.$tool = tools;
+Vue.prototype.$api = login;
 Vue.config.productionTip = false
 
 App.mpType = 'app'

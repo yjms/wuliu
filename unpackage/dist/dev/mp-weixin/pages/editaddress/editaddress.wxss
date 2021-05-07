@@ -30,8 +30,7 @@
 .row {
   width: 100%;
   padding: 0 28rpx;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
 }
 .row1 {
   width: calc(100vw - 56rpx);
@@ -44,8 +43,7 @@
   -webkit-box-pack: center;
   -webkit-justify-content: center;
           justify-content: center;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
 }
 .flex_col {
   display: -webkit-box;
@@ -54,8 +52,7 @@
   -webkit-box-align: center;
   -webkit-align-items: center;
           align-items: center;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
 }
 .whole {
   width: 100vw;
@@ -81,8 +78,7 @@
   width: 100%;
   font-size: 30rpx;
   padding: 0 10rpx;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
 }
 .comBtn {
   width: 700rpx;
@@ -99,8 +95,7 @@
   color: #FFFFFF;
   font-size: 32rpx;
   background-color: #5393FD;
-  -webkit-border-radius: 50rpx;
-          border-radius: 50rpx;
+  border-radius: 50rpx;
   position: absolute;
   left: 50%;
   -webkit-transform: translateX(-50%);
@@ -119,8 +114,7 @@
 }
 .towcol {
   padding: 0 10rpx;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
 }
 .setwh {
   width: 100%;

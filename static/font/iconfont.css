@@ -1,3 +1,4 @@
+
 @font-face {
   font-family: "iconfont";
   src: url('@/static/font/iconfont.ttf'); /* IE9 */
@@ -9,6 +10,10 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-zhangdan:before {
+  content: "\e60c";
 }
 
 .icon-fuzhicopy12:before {

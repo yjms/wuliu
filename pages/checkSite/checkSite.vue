@@ -1,19 +1,19 @@
 <template>
-	<view class="whole">
+	<view class="whole" ref="pp">
 		<view class="header">
 			<view class="iptBox">
 				<text class="seachIcon iconfont icon-chaxun"></text>
-				<input type="text" placeholder="请输入运单号" v-model="keyword"  @focus="search(1)" @blur="search(2)"/>
+				<input type="text" placeholder="请输入运单号" v-model="keyword"   @focus="search(1)" @blur="search(2)"/>
 			</view>
 			<view class="searchTxt" v-show="searchStatus" @click="search(3)">
 				查询
 			</view>
-			<view class="saoma iconfont icon-saoma" v-show="!searchStatus" @click="scancode">
+			<view class="saoma iconfont icon-saoma" v-show="!searchStatus" @click="scancode" >
 				<!-- 扫码 -->
 			</view>
 		</view>
 		<view class="navBox">
-			<view class="navItem" :class="currTab==1?'active':''" @click="changeTab(1)">
+			<!-- <view class="navItem" :class="currTab==1?'active':''" @click="changeTab(1)">
 				我寄出的
 			</view>
 			<view class="navItem" :class="currTab==2?'active':''" @click="changeTab(2)">
@@ -21,7 +21,7 @@
 			</view>
 			<view class="navItem" :class="currTab==3?'active':''" @click="changeTab(3)"> 
 				我关注的
-			</view>
+			</view> -->
 		</view>
 		<view class="navTime">
 			<view class="timeItem" :class="timeTab==1?'active':''" @click="changeTab(1,'time')">
@@ -41,75 +41,187 @@
 			<text class="iconfont icon-zanwushuju nodata"></text>
 			<text class="noText">暂无数据</text>
 		</view>
-		<view class="setbg row">
-			<scroll-view class="ydList" scroll-y="true">
-				<view class="bgWhile row1 yditem" v-for="it in 10" :key="item" @click="lookDel">
-					<view class="ydHeader">
-						<text>运单号: HX123456789101214 </text>
-						<text class="iconfont icon-fuzhicopy12"></text>
-					</view>
-					<view class="arive">
-						<view class="arrLeft">
-							<text class="cityName">上海市</text>
-							<text class="towRow">得物App白冰冰</text>
+		<view class="setbg row" v-if="hasData">
+			<scroll-view class="ydList" scroll-y="true"  lower-threshold="30" @scrolltolower="scrollLower">
+				<view class="setposi">
+					<view class="bgWhile row1 yditem" v-for="(it,index) in orderData" :key="it.Row" @click="lookDel(it.daidan_no)">
+						<view class="ydHeader" @click.stop="copeText(it.daidan_no)">
+							<text>运单号: {{it.daidan_no}} </text>
+							<text class="iconfont icon-fuzhicopy12"></text>
 						</view>
-						<view class="arrcenter">
-							<image src="../../static/image/dancheng.png"></image>
-							<text class="setmar">已签收</text>
+						<view class="arive">
+							<view class="arrLeft">
+								<text class="cityName">{{it.shifazhan}}</text>
+								<text class="towRow">{{it.daidan_fahuorenxingming}}</text>
+							</view>
+							<view class="arrcenter">
+								<image src="../../static/image/dancheng.png"></image>
+								<text class="setmar">{{it.fache}}</text>
+							</view>
+							<view class="arrRight">
+								<text class="cityName">{{it.mudizhan}}</text>
+								<text class="towRow">{{it.daidan_shouhuorenXingming}}</text>
+							</view>
 						</view>
-						<view class="arrRight">
-							<text class="cityName">长沙市</text>
-							<text class="towRow">杨理松</text>
+						<view class="statusBox" v-if="pageType == 5">
+							<text class="shink setwid">运费: </text>
+							<view class="shink rigTxt">{{it.daidan_hejijine}}</view>
+						</view>
+						<view class="statusBox">
+							<text class="shink setwid">{{it.qianshou}}: </text>
+							<view class="shink rigTxt">{{it.qianshouxinxi==""?"快件运输中，请耐心等待~":it.qianshouxinxi}}</view>
+						</view>
+						<view class="timebox">
+							 <text class="setwid">开单日期: </text>
+							 <text class="setpad">{{it.daidan_kaidanriqi}}</text>
+						</view>
+						<view class="ydFoot" @click.stop style="padding-top: 10upx;">
+							<view class="share" @click="lookmingxi(it.daidan_no)">
+								查看明细
+							</view>
+							<view class="del" @click="electronicOrder(it.daidan_no)">
+								电子运单
+							</view>
 						</view>
 					</view>
-					<view class="statusBox">
-						<text class="shink setwid">已签收: </text>
-						<view class="shink rigTxt">您的快件代签收(驿站)，如有疑问请电联快递员【易龙】,电话17673615001。疫情期间顺丰每</view>
-					</view>
-					<view class="timebox">
-						 <text class="setwid">签收时间: </text>
-						 <text class="setpad">2021-03-03 09:41</text>
-					</view>
-					<view class="ydFoot" @click.stop>
-						<view class="share">
-							分享
-						</view>
-						<view class="del">
-							删除
-						</view>
-					</view>
+				<text class="nomore" v-if="moreData">~没有更多数据啦~</text>
 				</view>
+				
 			</scroll-view>
 		</view>
-		
+		<!-- <image src="http://www.hyk56.net:8114/mobile_xiaochengxu.aspx?functionType=9&orderNO=4008149" mode=""></image> -->
+		<uni-calendar ref="calendar" :clear-date="true" :date="info.date" :insert="info.insert" :lunar="info.lunar" :startDate="info.startDate" :endDate="info.endDate" :range="info.range" @confirm="confirm" @close="close" />
 	</view>
 </template>
 
 <script>
+	function getDate(date, AddDayCount = 0) {
+		if (!date) {
+			date = new Date()
+		}
+		if (typeof date !== 'object') {
+			date = date.replace(/-/g, '/')
+		}
+		const dd = new Date(date)
+	
+		dd.setDate(dd.getDate() + AddDayCount) // 获取AddDayCount天后的日期
+	
+		const y = dd.getFullYear()
+		const m = dd.getMonth() + 1 < 10 ? '0' + (dd.getMonth() + 1) : dd.getMonth() + 1 // 获取当前月份的日期，不足10补0
+		const d = dd.getDate() < 10 ? '0' + dd.getDate() : dd.getDate() // 获取当前几号，不足10补0
+		return {
+			fullDate: y + '-' + m + '-' + d,
+			year: y,
+			month: m,
+			date: d,
+			day: dd.getDay()
+		}
+	}
 	export default {
 		data() {
 			return {
-				currTab:1,//默认显示今天的单号
-				timeTab:1,// 默认选择今天查询 
+				currTab:0,//默认显示今天的单号
+				timeTab:0,// 默认选择今天查询 
 				searchStatus:false, // 是否是搜索状态
 				keyword:"",// 搜索关键字
 				hasData:true,// 默认没数据
+				pageType:null,// 看看页面类型
+				orderData:[],// 订单数据
+				currIndex:1,// 默认查询第一页的数据
+				needReff:true,// 是否可以加载更多
+				showCalendar: false,
+				startTime:'',
+				endTime:'',
+				moreData:false,
+				info: {
+					lunar: true,
+					range: true,
+					insert: false,
+					selected: []
+				}
 			}
 		},
-		onLoad() {
-			console.log(6666)
+		onShow(option){
+			this.pageType =  this.$tool.getstorage("pageType");
+			this.showCalendar = true;
+			this.dealfun();
+			// console.log("pageType",this.pageType);
+		},
+		onLoad(option) {
+			// console.log("看看参数",option);
+			
 		},
 		methods: {
-			changeTab(tab,type){
-				type == "time"?this.timeTab = tab:this.currTab = tab;
+			lookmingxi(order){ //  查看明细
+				this.$tool.jump_nav(`/pages/orderlist/orderlist?order=${order}`)
+			},
+			electronicOrder(orderNO){
+				this.previewImage(orderNO);
+			},
+			previewImage(orderNO){
+				//预览轮播图
+				    let imageList = [`http://www.hyk56.net:8114/mobile_xiaochengxu.aspx?functionType=9&orderNO=${orderNO}`];
+						//uniapp预览轮播图
+						uni.previewImage({
+							current:0, //预览图片的下标
+							urls:imageList //预览图片的地址，必须要数组形式，如果不是数组形式就转换成数组形式就可以
+						})
+			},
+			copeText(val){ // 复制单号
+				// console.log("复制")
+				uni.setClipboardData({data:val})
+			},
+			scrollLower(){ // 上拉加载
+				console.log("触发");
+				if(!this.needReff) return;
+			 	this.currIndex =  ++this.currIndex;
+				this.delivery();
+			},
+			changeTab(tab,type){ // 改变时间
+				// console.log(tab,type,this.timeTab,tab == this.currTab) 
+				if(tab==this.timeTab){
+					this.dealfun();
+					this.timeTab = 0;
+					return
+				}else{
+					this.timeTab = tab;
+				}
+				if(tab == 4){
+					this.$refs.calendar.open();
+					return
+				}
+				if(type == "time"){
+					let arr = [1,7,30];
+					let obj = this.getDelTime(arr[tab-1]);
+					this.dealfun(obj.LDate,obj.nowDate)
+				}
+			},
+			dealfun(startTime="",endtime=""){ // 处理函数
+				console.log("进来了么")
+				this.currIndex = 1;
+				this.orderData = [];
+				this.needReff = true;
+				this.hasData = false;
+				this.startTime = startTime;
+				this.endTime = endtime;
+				this.delivery();
 			},
 			search(type){
 				type == 1 ? this.searchStatus = true : this.searchStatus = false;
-				if(type ==  3){
-					let str = this.keyword.trim();
-					if(str)
-					console.log(this.keyword);
+				if(type ==  3 || type ==  2){
+					this.timeTab = 0;
+					this.dealfun();
 				}
+			},
+			getOrder(){// 获取订单数据
+				// console.log(333)
+			    let dat = {
+					functionType:9,
+					orderNO:this.keyword
+				}
+				this.$api(dat).then(res=>{
+					console.log("订单数据",res);
+				})
 			},
 			scancode(){
 				// 只允许通过相机扫码
@@ -121,8 +233,115 @@
 				    }
 				});
 			},
-			lookDel(){
-				this.$tool.jump_nav("/pages/logisticsinfo/logisticsinfo")
+			getDelTime(type,currTime = new Date()){
+				//type 天数   currTime 丛哪天开始算 默认当天
+				// 获取几天的前的时间
+				let date = new Date(currTime);
+				console.log("date",date)
+				let year = date.getFullYear();
+				let month = date.getMonth()+1;
+				let day = date.getDate();
+				let nowDate = year + "-" + (month < 10 ? "0" + month : month) + "-" + (day < 10 ? "0" + day : day);
+				
+				let lastDate = new Date(date - 1000 * 60 * 60 * 24 * type);//最后30天可以更改，意义：是获取多少天前的时间
+				let lastY = lastDate.getFullYear();
+				let lastM = lastDate.getMonth()+1;
+				let lastD = lastDate.getDate();
+				let LDate = lastY + "-" + (lastM < 10 ? "0" + lastM : lastM) + "-"+ (lastD < 10 ? "0" + lastD : lastD);//得到30天前的时间
+				return {nowDate,LDate}
+			},
+			delivery(){ //发货明细
+				let funType = '';
+			    if(this.pageType == 5){
+					funType = 11;
+				}else{
+					funType = 6;
+				}
+				let dat = {
+					functionType:funType,
+					orderNO:this.keyword,
+					xieyiKehuID:this.$tool.getstorage("xykh_id"),
+					begindate:this.startTime,
+					enddate:this.endTime,
+					city_shifazhan:'',
+					city_mudizhan:'',
+					shouhuoren:'',
+					pageSize:10,
+					pageIndex:this.currIndex
+				}
+				this.$api(dat).then((res)=>{
+					console.log("看看发货明细",res)
+					if(res.data.MsgID == 0){
+						this.$tool.showTip(res.data.Msg);
+						let rel = res.Msg
+					}else{
+						// console.log("这是所有订单数据",this.orderData);
+						// console.log(JSON.parse(res.data.Msg).ds.prototype.toString());
+						if(Object.prototype.toString.call(JSON.parse(res.data.Msg).ds) == '[object Object]'){
+							console.log("laizhe")
+							this.moreData = true;
+							this.needReff = false;
+							return 
+						}
+						this.orderData = [...this.orderData,...(JSON.parse(res.data.Msg).ds)];
+						this.orderData.length == 0 ? this.hasData = false : this.hasData = true; 
+						JSON.parse(res.data.Msg).ds.length == 10 ? this.needReff = true : this.needReff = false;
+						JSON.parse(res.data.Msg).ds.length != 10 ? this.moreData = true : "";
+					}
+				},(err)=>{
+					console.log("看看呗")
+				}).catch((err)=>{
+					console.log(656)
+				})
+			},
+			lookDel(num){// 去详情
+				this.$tool.jump_nav(`/pages/logisticsinfo/logisticsinfo?num=${num}`)
+			},
+			open() {
+				this.$refs.calendar.open()
+			},
+			close() {
+				console.log('弹窗关闭');
+			},
+			change(e) {
+				console.log('change 返回:', e)
+				// 模拟动态打卡
+				if (this.info.selected.length > 5) return
+				this.info.selected.push({
+					date: e.fulldate,
+					info: '打卡'
+				})
+			},
+			confirm(e) {
+				if(!e.range.after){
+					this.startTime = this.getDelTime(1,e.range.before).LDate;
+					this.endTime = e.range.before;
+				}
+				if(e.range.after=="" && e.range.before==""){
+					this.startTime = this.getDelTime(1).LDate;
+					this.endTime = this.getDelTime(1).nowDate;
+				} 
+				if(e.range.after && e.range.before){
+					this.startTime = e.range.before;
+					this.endTime = e.range.after;
+				}
+				this.compareTime(this.startTime,this.endTime);
+				this.dealfun(this.startTime,this.endTime);
+			},
+			compareTime(start,end){
+				let startTime = new Date(start);
+				let endTime = new Date(end);
+				console.log("5656",start,end);
+				if(startTime > endTime){
+					this.startTime = end;
+					this.endTime = start;
+				}else{
+					this.startTime = start;
+					this.endTime = end;
+				}
+			},
+			monthSwitch(e) {
+				console.log('monthSwitchs 返回:', e)
 			}
 		}
 	}
@@ -274,11 +493,12 @@
 	}
 	.ydList{
 		width: 100%;
-		height: calc(100vh - 350upx);
+		height: calc(100vh - 300upx);
 		display: flex;
 		align-items: center;
 		flex-direction: column;
 		margin-top: 18upx;
+		position: relative;
 	}
 	.yditem{
 		width: 100%;
@@ -346,6 +566,7 @@
 		margin: 18upx 0;
 		border-bottom: 1upx solid #dedede;
 		padding-bottom: 18upx;
+		margin: 0;
 	}
 	.ydFoot{
 		display: flex;
@@ -371,5 +592,25 @@
 	}
 	.setpad{
 		padding: 0 18upx;
+	}
+	.setposi{
+		position: relative;
+		padding-bottom: 20upx;
+	}
+	.nomore{
+		position: absolute;
+		bottom: -10upx;
+		left: 50%;
+		transform: translateX(-50%);
+		color: #999;
+		margin-top: 10upx;
+		font-size: 28upx;
+	}
+	.arrLeft>text,.arrRight>text{
+		overflow: hidden;
+		text-overflow:ellipsis;
+		white-space: nowrap;
+		width: 150upx;
+		text-align: center;
 	}
 </style>

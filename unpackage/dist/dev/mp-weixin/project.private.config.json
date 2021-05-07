@@ -59,6 +59,11 @@
           "pathName": "pages/logisticsinfo/logisticsinfo",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "登录页面",
+          "pathName": "pages/login/login",
+          "scene": null
         }
       ]
     }

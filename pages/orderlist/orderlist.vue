@@ -2,41 +2,34 @@
 	<view class="whole2">
 		<view class="setbg row">
 			<scroll-view class="ydList" scroll-y="true">
-				<view class="bgWhile row1 yditem" v-for="it in 10" :key="item">
+				<view class="bgWhile row1 yditem">
 					<view class="ydHeader">
-						<text>运单号: HX123456789101214 </text>
-						<text class="iconfont icon-fuzhicopy12"></text>
+						<text>{{lookType==1?"运单明细":"库存数据"}}</text>
 					</view>
-					<view class="arive">
-						<view class="arrLeft">
-							<text class="cityName">上海市</text>
-							<text class="towRow">得物App白冰冰</text>
-						</view>
-						<view class="arrcenter">
-							<image src="../../static/image/dancheng.png"></image>
-							<text class="setmar">已签收</text>
-						</view>
-						<view class="arrRight">
-							<text class="cityName">长沙市</text>
-							<text class="towRow">杨理松</text>
-						</view>
+					<view class="timebox" v-for="it in kcData" :key="it">
+						 <text class="setwid">{{it.name}}: </text>
+						 <text class="setpad">{{relObj[it.type]}}</text>
 					</view>
-					<view class="statusBox">
-						<text class="shink setwid">已签收: </text>
-						<view class="shink rigTxt">您的快件代签收(驿站)，如有疑问请电联快递员【易龙】,电话17673615001。疫情期间顺丰每</view>
+					<!-- <view class="timebox">
+						 <text class="setwid">派送费: </text>
+						 <text class="setpad">{{it.paisongfei_sum}}</text>
 					</view>
 					<view class="timebox">
-						 <text class="setwid">签收时间: </text>
-						 <text class="setpad">2021-03-03 09:41</text>
+						 <text class="setwid">费用: </text>
+						 <text class="setpad">{{it.heji_sum}}</text>
 					</view>
-					<view class="ydFoot" @click.stop>
-						<view class="share">
-							分享
-						</view>
-						<view class="del">
-							删除
-						</view>
+					<view class="timebox">
+						 <text class="setwid">件数: </text>
+						 <text class="setpad">{{it.jianshu_sum}}</text>
 					</view>
+					<view class="timebox">
+						 <text class="setwid">重量: </text>
+						 <text class="setpad">{{it.zhongliang_sum}}</text>
+					</view>
+					<view class="timebox">
+						 <text class="setwid">体积: </text>
+						 <text class="setpad">{{it.tiji_sum}}</text>
+					</view> -->
 				</view>
 			</scroll-view>
 		</view>
@@ -47,8 +40,47 @@
 	export default {
 		data() {
 			return {
-				
+				kcData:[
+					{
+						name:'运费',
+						type:'yunfei_sum',
+					},
+					{
+						name:'派送费',
+						type:'paisongfei_sum',
+					},
+					{
+						name:'费用',
+						type:'heji_sum',
+					},
+					{
+						name:'件数',
+						type:'jianshu_sum',
+					},
+					{
+						name:'重量',
+						type:'zhongliang_sum',
+					},
+					{
+						name:'体积',
+						type:'tiji_sum'
+					}
+				],// 库存数据
+				lookType:1,// 查看类型
+				relObj:null,// 数据对象
 			}
+		},
+		onLoad(qurey){
+			// console.log("看看参数",qurey);
+			if(qurey.order || qurey.order == 0){
+				this.getmingxi(qurey.order);
+				this.lookType = 1;
+			}else{
+				this.getkucun();
+				this.lookType = 2;
+			}
+		},
+		onShow(){
 		},
 		methods: {
 			previewImage(){
@@ -59,6 +91,105 @@
 							current:0, //预览图片的下标
 							urls:imageList //预览图片的地址，必须要数组形式，如果不是数组形式就转换成数组形式就可以
 						})
+			},
+			getmingxi(order){
+				let arr = [
+					{
+						name:"订单号",
+						type:"daidan_no",
+					},
+					{
+						name:"品名",
+						type:"daidan_pingming"
+					},
+					{
+						name:"收货地址",
+						type:"daidan_shouhuorenAddress"
+					},
+					{
+						name:"收货人姓名",
+						type:"daidan_shouhuorenXingming"
+					},
+					{
+						name:"件数",
+						type:"daidan_jianshu"
+					},
+					{
+						name:"代收款",
+						type:"daidan_daishoukuan"
+					},
+					{
+						name:"开单日期",
+						type:"daidan_kaidanriqi"
+					},
+					{
+						name:"送货方式",
+						type:"daidan_tihuofangshi"
+					},
+					{
+						name:"付款方式",
+						type:"daidan_fukuanfangshi"
+					},
+					{
+						name:"保险价值",
+						type:"daidan_baoxianjiazhi"
+					},
+					{
+						name:"派送费",
+						type:"daidan_paisongfeiyong"
+					},
+					{
+						name:"计费重量",
+						type:"daidan_jifeizhongliang"
+					},
+					{
+						name:"计费体积",
+						type:"daidan_jifeitiji"
+					},
+					{
+						name:"是否出发",
+						type:"fache"
+					},
+					{
+						name:"要求时效",
+						type:"daidan_kehushixiao"
+					},
+					{
+						name:"合计金额",
+						type:"daidan_hejijine"
+					}
+				]
+				this.kcData = arr;
+				let dat = {
+					functionType:7,
+					orderNO:order
+				}
+				this.$api(dat).then(rel=>{
+					console.log("看看明细",rel);
+					if(rel.data.MsgID==1){
+						this.relObj = JSON.parse(rel.data.Msg).ds[0];
+					}
+				})
+			},
+			getkucun(){
+				// 获取库存
+				let dat = {
+					functionType:10,
+					xieyiKehuID:this.$tool.getstorage("xykh_id"),
+					begindate:'',
+					enddate:'',
+					city_shifazhan:'',
+					city_mudizhan:'',
+					shouhuoren:'',
+					orderNO:''
+				}
+				this.$api(dat).then(res=>{
+					// console.log("看看库存数据");
+					if(res.data.MsgID == 1){
+						this.relObj = JSON.parse(res.data.Msg).ds[0];
+						 console.log("看看库存数据",this.relObj)
+					}
+				})
 			}
 		}
 	}
@@ -323,6 +454,8 @@
 	}
 	.yditem>.ydHeader{
 		display: flex;
+		font-size: 36upx;
+		font-weight: bold;
 	}
 	.arive{
 		width: 100%;
