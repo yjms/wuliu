@@ -63,6 +63,12 @@
         {
           "name": "登录页面",
           "pathName": "pages/login/login",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "picker",
+          "pathName": "pages/picker/picker",
           "scene": null
         }
       ]

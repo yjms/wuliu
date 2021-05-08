@@ -24,14 +24,17 @@
 			</view> -->
 		</view>
 		<view class="navTime">
-			<view class="timeItem" :class="timeTab==1?'active':''" @click="changeTab(1,'time')">
+		<!-- 	<view class="timeItem" :class="timeTab==1?'active':''" @click="changeTab(1,'time')">
 				今天
-			</view>
+			</view> -->
 			<view class="timeItem" :class="timeTab==2?'active':''" @click="changeTab(2,'time')">
 				近七天
 			</view>
 			<view class="timeItem" :class="timeTab==3?'active':''" @click="changeTab(3,'time')">
 				近一个月
+			</view>
+			<view class="timeItem" :class="timeTab==1?'active':''" @click="changeTab(1,'time')">
+				近俩个月
 			</view>
 			<view class="timeItem" :class="timeTab==4?'active':''" @click="changeTab(4,'time')">
 				自定义
@@ -89,8 +92,24 @@
 				
 			</scroll-view>
 		</view>
-		<!-- <image src="http://www.hyk56.net:8114/mobile_xiaochengxu.aspx?functionType=9&orderNO=4008149" mode=""></image> -->
 		<uni-calendar ref="calendar" :clear-date="true" :date="info.date" :insert="info.insert" :lunar="info.lunar" :startDate="info.startDate" :endDate="info.endDate" :range="info.range" @confirm="confirm" @close="close" />
+		<!-- 关注公众号的盒子 -->
+		<view class="gzhBox" @click="showHidePop">
+			<view class="hzBox">
+				查看汇总
+				<!-- <text class="iconfont icon-guanbi close"></text> -->
+			</view>
+		</view>
+		<!-- 汇总弹窗 -->
+		<view class="allScree" v-if="popStatus">
+			<view class="allBox animated bounceIn">
+				<text class="iconfont icon-guanbi close" @click="showHidePop"></text>
+				<text class="title">{{pageType == 3?'库存':'订单'}}汇总</text>
+				<view class="rowTxt" v-for="it in popData" :key="it">
+					{{it.name}} : {{popObj[it.type] || ""}}
+				</view>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -138,20 +157,72 @@
 					range: true,
 					insert: false,
 					selected: []
-				}
+				},
+				popStatus:false,// 默认不显示弹窗
+				popData:[
+					{
+						name:"总运费",
+						type:"yunfei_sum",
+					},{
+						name:"总派送费",
+						type:"paisongfei_sum"
+					},{
+						name:"总件数",
+						type:"jianshu_sum"
+					},{
+						name:"总重量",
+						type:"zhongliang_sum"
+					},{
+						name:"总体积",
+						type:"tiji_sum"
+					},{
+						name:"总费用",
+						type:"heji_sum"
+					}
+				],
+				popObj:{},// 弹窗对象
 			}
 		},
-		onShow(option){
-			this.pageType =  this.$tool.getstorage("pageType");
-			this.showCalendar = true;
-			this.dealfun();
-			// console.log("pageType",this.pageType);
+		onShow(){
+			if(this.pageType != this.$tool.getstorage("pageType")){
+					this.pageType =  this.$tool.getstorage("pageType");
+					this.showCalendar = true;
+					this.dealfun();
+					this.getallDel();
+			}
 		},
 		onLoad(option) {
-			// console.log("看看参数",option);
 			
 		},
 		methods: {
+			showHidePop(){
+				this.popStatus = !this.popStatus;
+			},
+			getallDel(){
+				// 查询汇总明细
+				let funType = 10;
+				if(this.pageType != 3){
+					funType = 5;
+				}
+				let dat = {
+					functionType:funType,
+					xieyiKehuID:this.$tool.getstorage("xykh_id"),
+					begindate:'',
+					enddate:'',
+					city_shifazhan:'',
+					city_mudizhan:'',
+					shouhuoren:'',
+					orderNO:''
+				}
+				this.$api(dat).then(res=>{
+					 console.log("看看汇总明细",res);
+					 if(res.data.MsgID == 1){
+						 this.popObj = JSON.parse(res.data.Msg).ds[0];
+					 }else{
+						 this.$tool.showTip(res.data.Msg)
+					 }
+				})
+			},
 			lookmingxi(order){ //  查看明细
 				this.$tool.jump_nav(`/pages/orderlist/orderlist?order=${order}`)
 			},
@@ -172,7 +243,6 @@
 				uni.setClipboardData({data:val})
 			},
 			scrollLower(){ // 上拉加载
-				console.log("触发");
 				if(!this.needReff) return;
 			 	this.currIndex =  ++this.currIndex;
 				this.delivery();
@@ -191,7 +261,7 @@
 					return
 				}
 				if(type == "time"){
-					let arr = [1,7,30];
+					let arr = [60,7,30];
 					let obj = this.getDelTime(arr[tab-1]);
 					this.dealfun(obj.LDate,obj.nowDate)
 				}
@@ -251,8 +321,9 @@
 				return {nowDate,LDate}
 			},
 			delivery(){ //发货明细
+				this.pageType =  this.$tool.getstorage("pageType");
 				let funType = '';
-			    if(this.pageType == 5){
+			    if(this.pageType == 3){
 					funType = 11;
 				}else{
 					funType = 6;
@@ -613,4 +684,70 @@
 		width: 150upx;
 		text-align: center;
 	}
+	.gzhBox{
+		width: 150upx;
+		height: 60upx;
+		// background-color: red;
+		position: fixed;
+		right: 0;
+		bottom: 100upx;
+		overflow: hidden;
+		// border-radius: ;
+	}
+	.hzBox{
+		width: 200upx;
+		height: 60upx;
+		border-radius: 40upx;
+		background-color: $all-font-Tcolor;
+		// background-color: ;
+		background-image: linear-gradient(to right,#5393FD,#FA7240);
+		color: #fff;
+		font-size: 26upx;
+		display: flex;
+		line-height: 60upx;
+		// align-items: center;
+		padding-left: 26upx;
+		box-sizing: border-box;
+	}
+	.allScree{
+		width: 100vw;
+		height: 100vh;
+		background-color: rgba(0,0,0,.3);
+		position: fixed;
+		left: 0;
+		top: 0;
+		z-index: 99;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	.allBox{
+		width: 650upx;
+		// height: 800upx;
+		background-color: #fff;
+		border-radius: 20upx;
+		padding: 18upx 20upx;
+		box-sizing: border-box;
+		position: relative;
+		.title{
+			font-size: 32upx;
+			font-weight: bold;
+		}
+		.rowTxt{
+			margin: 20upx 0;
+			font-size: 28upxx;
+			color: #666;
+			letter-spacing: 1.5upx;
+		}
+		.close{
+			font-size: 68upx;
+			color: #000 !important;
+			position: absolute;
+			right: 10upx;
+			top: 10upx;
+			// padding: 10px;
+			// border: 10px solid;
+		}
+	}
+
 </style>

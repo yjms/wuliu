@@ -7,17 +7,16 @@
 			<view class="row1 iptRow">
 				<input type="text" value="" placeholder="手机号码或固话" class="iptItem"/>
 			</view>
-			<view class="row1 iptRow">
-				<picker class="setwh" @change="bindPickerChange" @columnchange="columnchange"  mode="multiSelector" :value="index" :range="array">
+			<view class="row1 iptRow" @click="changeArea">
+				<!-- <picker class="setwh" @change="bindPickerChange" @columnchange="columnchange" value="0"  range-key="pName"  mode="multiSelector" :range="array"> -->
 					<view class="uni-input setwh flex_col">地区</view>
-				</picker>
-				<!-- <input type="text" value="" placeholder="请选择省-市-区" class="iptItem"/> -->
+				<!-- </picker> -->
 			</view>
 			<view class="row1 iptRow">
 				<input type="text" value="" placeholder="输入街道、门牌号等信息" class="iptItem"/>
 			</view>
 			<view class="row1 iptRow">
-				<view class="towcol">
+				<view class="towcol" @click="changeDefault">
 					<text class="iconfont icon-weixuanzhong"></text>
 					<text class="iconfont icon-xuanzhong" v-show="false"></text>
 				</view>
@@ -27,22 +26,111 @@
 		<view class="comBtn">
 			确定
 		</view>
+		<view class="pickBox" v-show="showArea">
+			<view class="headers"></view>
+			<view class="foot">
+				<view class="pickerTop">
+					<text @click="changeArea(1)">取消</text>
+					<text @click="changeArea(2)">确定</text>
+				</view>
+				<picker-view  v-if="visible"  mode="multiSelector" :indicator-style="indicatorStyle"  value="PID" @change="bindChange" class="picker-view">
+				    <picker-view-column>
+				        <view class="item" v-for="(item,index) in province" :key="index" :data-val="item.PID" >{{item.pName}}</view>
+				    </picker-view-column>
+				    <picker-view-column>
+				        <view class="item" v-for="(item,index) in city" :key="index">{{item.cName}}</view>
+				    </picker-view-column>
+				    <picker-view-column>
+				        <view class="item" v-for="(item,index) in area" :key="index">{{item.UName}}</view>
+				    </picker-view-column>
+				</picker-view>
+			</view>
+		</view>
 	</view>
 </template>
 <script>
 	export default {
 		data() {
 			return {
-				 array:[['深圳', '广州', '东莞', '佛山','金华'],['宝安区','龙华区','龙岗区','盐田区','南山区','福田区','罗湖区','坪山区','光明区']],
-				 index:0
+				 province:[],// 省
+				 city:[],// 市
+				 area:[],// 区
+				 visible:true, //  默认不显示picker
+				 arr:[0,0,0],
+				 showArea:false,// 是否显示地区组件
 			}
 		},
+		created(){
+			this.getArea("pro");
+		},
 		methods: {
-			bindPickerChange(){// 选择地址
-				
+			changeArea(type){
+				this.showArea = !this.showArea;
+				if(type == 1){
+					console.log("取消i")
+					return
+				}
+				if(type == 2){
+					console.log("确定")
+					return
+				}
 			},
-			columnchange(e){
-				console.log("看看是啥",e);
+			bindChange(e){
+				console.log("看看e",e)
+				let column = e.detail.value;
+				if(this.arr[0] != column[0]){
+					// console.log("第一列滚动",column)
+					this.getArea('city',column[0]);
+					this.arr = [...column] ;
+					return
+				}
+				if(this.arr[1] != column[1]){
+					console.log("第二列滚动");
+					this.getArea('area',column[1]);
+					this.arr = [...column]; 
+					return
+				}
+				if(this.arr[2]!=column[2]){
+					console.log("第三列滚动");
+					this.arr = [...column]; 
+					return;
+				}
+			},
+			getArea(type,ix=0){ //  获取省
+				let obj = {pro:12,city:13,area:14}
+				let dat = {
+					functionType:obj[type]
+				}
+				type == 'city' ? dat.ProvinceID = this.province[ix].PID:'';
+				type == 'area' ? dat.CityID = this.city[ix].CID:'';
+				this.$api(dat).then(res=>{
+					// console.log("看看省市区",res.data.Msg);
+					if(res.data.MsgID == 1){
+						if(type=='pro'){
+							this.province = JSON.parse(res.data.Msg).ds;
+							console.log("省",this.province)
+							this.getArea("city");
+							return
+						}
+						if(type == 'city'){
+							this.city = JSON.parse(res.data.Msg).ds;
+							console.log("市",this.city)
+							this.getArea('area')
+							return;
+						}
+						if(type=='area'){
+							this.area = JSON.parse(res.data.Msg).ds;
+							console.log("区",this.area)
+							return
+						}
+					}else{
+						this.$tool.showTip(res.data.Msg)
+					}
+				})
+			},
+			changeDefault(){
+				// 是否为默认
+				
 			}
 		}
 	}
@@ -124,5 +212,64 @@
 	.setwh{
 		width: 100%;
 		// height: 100%;
+	}
+	// picker 组件
+	.pickBox{
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		height: 100vh;
+		// background-color: #FFFFFF;
+		z-index: 99;
+		display: flex;
+		flex-direction: column;
+		.headers{
+			width: 100%;
+			flex: 1;
+			background-color: rgba(0,0,0,.3);
+		}
+		.foot{
+			width: 100%;
+			height: 500upx;
+			background-color: #FFFFFF;
+			animation: pickerTop 1s linear;
+			position: absolute;
+			bottom: 0;
+		}
+	}
+	.pickerTop{
+		width: 100%;
+		// height: 60upx;
+		display: flex;
+		justify-content: space-between;
+		padding: 15upx 20upx;
+		box-sizing: border-box;
+		font-size: 28upx;
+		color: #888;
+	}
+	.pickerTop>text:last-child{
+		color: $all-font-Tcolor;
+	}
+	.picker-view {
+	      width: 750rpx;
+	      height: 600rpx;
+	      margin-top: 20rpx;
+	  }
+	  .item {
+	      height: 100upx;
+	      // align-items: center;
+	      justify-content: center;
+	      text-align: center;
+		  font-size: 28upx;
+		  line-height: 70upx;
+	  }
+	@keyframes pickerTop{
+		0%{
+			bottom: -100%;
+		}
+		100%{
+			bottom: 0%;
+		}
 	}
 </style>

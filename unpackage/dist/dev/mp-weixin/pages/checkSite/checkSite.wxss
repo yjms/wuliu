@@ -384,4 +384,71 @@
   width: 150rpx;
   text-align: center;
 }
+.gzhBox {
+  width: 150rpx;
+  height: 60rpx;
+  position: fixed;
+  right: 0;
+  bottom: 100rpx;
+  overflow: hidden;
+}
+.hzBox {
+  width: 200rpx;
+  height: 60rpx;
+  border-radius: 40rpx;
+  background-color: #5393FD;
+  background-image: -webkit-linear-gradient(left, #5393FD, #FA7240);
+  background-image: linear-gradient(to right, #5393FD, #FA7240);
+  color: #fff;
+  font-size: 26rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  line-height: 60rpx;
+  padding-left: 26rpx;
+  box-sizing: border-box;
+}
+.allScree {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.3);
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 99;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+}
+.allBox {
+  width: 650rpx;
+  background-color: #fff;
+  border-radius: 20rpx;
+  padding: 18rpx 20rpx;
+  box-sizing: border-box;
+  position: relative;
+}
+.allBox .title {
+  font-size: 32rpx;
+  font-weight: bold;
+}
+.allBox .rowTxt {
+  margin: 20rpx 0;
+  font-size: 28upxx;
+  color: #666;
+  letter-spacing: 1.5rpx;
+}
+.allBox .close {
+  font-size: 68rpx;
+  color: #000 !important;
+  position: absolute;
+  right: 10rpx;
+  top: 10rpx;
+}
 

@@ -4,7 +4,7 @@
 			<scroll-view class="ydList" scroll-y="true">
 				<view class="bgWhile row1 yditem">
 					<view class="ydHeader">
-						<text>{{lookType==1?"运单明细":"库存数据"}}</text>
+						<text>{{lookType==1?"订单明细":"订单明细"}}</text>
 					</view>
 					<view class="timebox" v-for="it in kcData" :key="it">
 						 <text class="setwid">{{it.name}}: </text>

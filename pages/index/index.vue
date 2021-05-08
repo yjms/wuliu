@@ -4,7 +4,7 @@
 			<image src="../../static/image/banner.jpg"></image>
 		</view>
 		<view class="ullist">
-		<!-- 	<view class="items">
+			<view class="items">
 				<view class="iconBox iconfont icon-yuyue">
 					
 				</view>
@@ -12,7 +12,7 @@
 				   <text class="itemTitle">预约寄件</text>
 				   <text class="itemDle">支持2小时上门取件</text>
 				</view>
-			</view> -->
+			</view>
 			
 			<view class="items">
 				<view class="iconBox iconfont icon-B">
@@ -64,7 +64,7 @@
 			</view>
 		</view>
 		<!-- 关注公众号的盒子 -->
-	<!-- 	<view class="gzhBox">
+<!-- 		<view class="gzhBox">
 			<view class="close iconfont icon-guanbi"></view>
 			<text>关注公众号，随时接收物流消息</text>
 			<button type="default" class="gzBtn">去关注</button>
@@ -106,7 +106,7 @@
 					this.$tool.jump_nav("/pages/login/login")
 					return
 				}
-				if(nav == 4 || nav == 5){
+				if(nav == 4 || nav == 5 ||  nav == 3){
 					this.$tool.setstorage("pageType",nav);
 					this.$tool.jump_switch(`/pages/checkSite/checkSite?ix=${nav}`);
 					return;

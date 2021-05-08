@@ -208,4 +208,20 @@
           flex: 1;
   width: 100vw;
 }
+.address.data-v-db675620 {
+  width: 620rpx;
+  height: 65rpx;
+  background-color: #5393FD;
+  border-radius: 40rpx;
+  position: fixed;
+  bottom: 50rpx;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  color: #fff;
+  text-align: center;
+  font-size: 30rpx;
+  line-height: 65rpx;
+  z-index: 9;
+}
 

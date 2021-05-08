@@ -13,7 +13,8 @@
 </script>
 
 <style lang="scss">
-	@import  "./static/font/iconfont.css"
+	@import  "./static/font/iconfont.css";
+	// @import  "animate.css"
 	// @font-face {font-family: "iconfont";
 	//   src: url('@/static/font/iconfont.ttf')
 	// }

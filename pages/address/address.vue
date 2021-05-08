@@ -60,6 +60,7 @@
 			</view>
 			
 		</view>
+		<view class="address" @click="editAddress('edit')">添加地址</view>
 	</view>
 </template>
 
@@ -235,5 +236,20 @@
 		flex: 1;
 		width:100vw;
 		// background-color: red;
+	}
+	.address{
+		width: 620upx;
+		height: 65upx;
+		background-color: $all-font-Tcolor;
+		border-radius: 40upx;
+		position: fixed;
+		bottom: 50upx;
+		left: 50%;
+		transform: translateX(-50%);
+		color: #fff;
+		text-align: center;
+		font-size: 30upx;
+		line-height: 65upx;
+		z-index: 9;
 	}
 </style>

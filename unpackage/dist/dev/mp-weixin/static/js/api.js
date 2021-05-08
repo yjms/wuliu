@@ -1,4 +1,4 @@
-const baseUrl = "http://www.hyk56.net:8114/";
+const baseUrl = "https://www.hyk56.net/";
 export const api = (url,option={})=>{
 	// console.log(`${baseUrl}${url}`);
 	uni.showLoading({

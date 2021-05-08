@@ -249,6 +249,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 function getDate(date) {var AddDayCount = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
   if (!date) {
@@ -292,21 +311,73 @@ function getDate(date) {var AddDayCount = arguments.length > 1 && arguments[1] !
         lunar: true,
         range: true,
         insert: false,
-        selected: [] } };
+        selected: [] },
+
+      popStatus: false, // 默认不显示弹窗
+      popData: [
+      {
+        name: "总运费",
+        type: "yunfei_sum" },
+      {
+        name: "总派送费",
+        type: "paisongfei_sum" },
+      {
+        name: "总件数",
+        type: "jianshu_sum" },
+      {
+        name: "总重量",
+        type: "zhongliang_sum" },
+      {
+        name: "总体积",
+        type: "tiji_sum" },
+      {
+        name: "总费用",
+        type: "heji_sum" }],
 
 
+      popObj: {} // 弹窗对象
+    };
   },
-  onShow: function onShow(option) {
-    this.pageType = this.$tool.getstorage("pageType");
-    this.showCalendar = true;
-    this.dealfun();
-    // console.log("pageType",this.pageType);
+  onShow: function onShow() {
+    if (this.pageType != this.$tool.getstorage("pageType")) {
+      this.pageType = this.$tool.getstorage("pageType");
+      this.showCalendar = true;
+      this.dealfun();
+      this.getallDel();
+    }
   },
   onLoad: function onLoad(option) {
-    // console.log("看看参数",option);
 
   },
   methods: {
+    showHidePop: function showHidePop() {
+      this.popStatus = !this.popStatus;
+    },
+    getallDel: function getallDel() {var _this = this;
+      // 查询汇总明细
+      var funType = 10;
+      if (this.pageType != 3) {
+        funType = 5;
+      }
+      var dat = {
+        functionType: funType,
+        xieyiKehuID: this.$tool.getstorage("xykh_id"),
+        begindate: '',
+        enddate: '',
+        city_shifazhan: '',
+        city_mudizhan: '',
+        shouhuoren: '',
+        orderNO: '' };
+
+      this.$api(dat).then(function (res) {
+        console.log("看看汇总明细", res);
+        if (res.data.MsgID == 1) {
+          _this.popObj = JSON.parse(res.data.Msg).ds[0];
+        } else {
+          _this.$tool.showTip(res.data.Msg);
+        }
+      });
+    },
     lookmingxi: function lookmingxi(order) {//  查看明细
       this.$tool.jump_nav("/pages/orderlist/orderlist?order=".concat(order));
     },
@@ -327,7 +398,6 @@ function getDate(date) {var AddDayCount = arguments.length > 1 && arguments[1] !
       uni.setClipboardData({ data: val });
     },
     scrollLower: function scrollLower() {// 上拉加载
-      console.log("触发");
       if (!this.needReff) return;
       this.currIndex = ++this.currIndex;
       this.delivery();
@@ -346,7 +416,7 @@ function getDate(date) {var AddDayCount = arguments.length > 1 && arguments[1] !
         return;
       }
       if (type == "time") {
-        var arr = [1, 7, 30];
+        var arr = [60, 7, 30];
         var obj = this.getDelTime(arr[tab - 1]);
         this.dealfun(obj.LDate, obj.nowDate);
       }
@@ -405,9 +475,10 @@ function getDate(date) {var AddDayCount = arguments.length > 1 && arguments[1] !
       var LDate = lastY + "-" + (lastM < 10 ? "0" + lastM : lastM) + "-" + (lastD < 10 ? "0" + lastD : lastD); //得到30天前的时间
       return { nowDate: nowDate, LDate: LDate };
     },
-    delivery: function delivery() {var _this = this; //发货明细
+    delivery: function delivery() {var _this2 = this; //发货明细
+      this.pageType = this.$tool.getstorage("pageType");
       var funType = '';
-      if (this.pageType == 5) {
+      if (this.pageType == 3) {
         funType = 11;
       } else {
         funType = 6;
@@ -427,21 +498,21 @@ function getDate(date) {var AddDayCount = arguments.length > 1 && arguments[1] !
       this.$api(dat).then(function (res) {
         console.log("看看发货明细", res);
         if (res.data.MsgID == 0) {
-          _this.$tool.showTip(res.data.Msg);
+          _this2.$tool.showTip(res.data.Msg);
           var rel = res.Msg;
         } else {
           // console.log("这是所有订单数据",this.orderData);
           // console.log(JSON.parse(res.data.Msg).ds.prototype.toString());
           if (Object.prototype.toString.call(JSON.parse(res.data.Msg).ds) == '[object Object]') {
             console.log("laizhe");
-            _this.moreData = true;
-            _this.needReff = false;
+            _this2.moreData = true;
+            _this2.needReff = false;
             return;
           }
-          _this.orderData = [].concat(_toConsumableArray(_this.orderData), _toConsumableArray(JSON.parse(res.data.Msg).ds));
-          _this.orderData.length == 0 ? _this.hasData = false : _this.hasData = true;
-          JSON.parse(res.data.Msg).ds.length == 10 ? _this.needReff = true : _this.needReff = false;
-          JSON.parse(res.data.Msg).ds.length != 10 ? _this.moreData = true : "";
+          _this2.orderData = [].concat(_toConsumableArray(_this2.orderData), _toConsumableArray(JSON.parse(res.data.Msg).ds));
+          _this2.orderData.length == 0 ? _this2.hasData = false : _this2.hasData = true;
+          JSON.parse(res.data.Msg).ds.length == 10 ? _this2.needReff = true : _this2.needReff = false;
+          JSON.parse(res.data.Msg).ds.length != 10 ? _this2.moreData = true : "";
         }
       }, function (err) {
         console.log("看看呗");

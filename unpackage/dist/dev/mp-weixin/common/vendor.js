@@ -2103,6 +2103,19 @@ var login = function login(data) {return _request('mobile_xiaochengxu.aspx', { d
 
 /***/ }),
 
+/***/ 127:
+/*!************************************************!*\
+  !*** C:/项目目录/wuliu/static/css/animate.min.css ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+    if(false) { var cssReload; }
+  
+
+/***/ }),
+
 /***/ 13:
 /*!**************************************!*\
   !*** C:/项目目录/wuliu/static/js/api.js ***!
@@ -2111,7 +2124,7 @@ var login = function login(data) {return _request('mobile_xiaochengxu.aspx', { d
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.api = void 0;var baseUrl = "http://www.hyk56.net:8114/";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.api = void 0;var baseUrl = "https://www.hyk56.net/";
 var api = function api(url) {var option = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
   // console.log(`${baseUrl}${url}`);
   uni.showLoading({

@@ -130,7 +130,26 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function _toConsumableArray(arr) {return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();}function _nonIterableSpread() {throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(o);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _iterableToArray(iter) {if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);}function _arrayWithoutHoles(arr) {if (Array.isArray(arr)) return _arrayLikeToArray(arr);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;} //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -165,16 +184,85 @@ var _default =
 {
   data: function data() {
     return {
-      array: [['深圳', '广州', '东莞', '佛山', '金华'], ['宝安区', '龙华区', '龙岗区', '盐田区', '南山区', '福田区', '罗湖区', '坪山区', '光明区']],
-      index: 0 };
-
+      province: [], // 省
+      city: [], // 市
+      area: [], // 区
+      visible: true, //  默认不显示picker
+      arr: [0, 0, 0],
+      showArea: false // 是否显示地区组件
+    };
+  },
+  created: function created() {
+    this.getArea("pro");
   },
   methods: {
-    bindPickerChange: function bindPickerChange() {// 选择地址
-
+    changeArea: function changeArea(type) {
+      this.showArea = !this.showArea;
+      if (type == 1) {
+        console.log("取消i");
+        return;
+      }
+      if (type == 2) {
+        console.log("确定");
+        return;
+      }
     },
-    columnchange: function columnchange(e) {
-      console.log("看看是啥", e);
+    bindChange: function bindChange(e) {
+      console.log("看看e", e);
+      var column = e.detail.value;
+      if (this.arr[0] != column[0]) {
+        // console.log("第一列滚动",column)
+        this.getArea('city', column[0]);
+        this.arr = _toConsumableArray(column);
+        return;
+      }
+      if (this.arr[1] != column[1]) {
+        console.log("第二列滚动");
+        this.getArea('area', column[1]);
+        this.arr = _toConsumableArray(column);
+        return;
+      }
+      if (this.arr[2] != column[2]) {
+        console.log("第三列滚动");
+        this.arr = _toConsumableArray(column);
+        return;
+      }
+    },
+    getArea: function getArea(type) {var _this = this;var ix = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0; //  获取省
+      var obj = { pro: 12, city: 13, area: 14 };
+      var dat = {
+        functionType: obj[type] };
+
+      type == 'city' ? dat.ProvinceID = this.province[ix].PID : '';
+      type == 'area' ? dat.CityID = this.city[ix].CID : '';
+      this.$api(dat).then(function (res) {
+        // console.log("看看省市区",res.data.Msg);
+        if (res.data.MsgID == 1) {
+          if (type == 'pro') {
+            _this.province = JSON.parse(res.data.Msg).ds;
+            console.log("省", _this.province);
+            _this.getArea("city");
+            return;
+          }
+          if (type == 'city') {
+            _this.city = JSON.parse(res.data.Msg).ds;
+            console.log("市", _this.city);
+            _this.getArea('area');
+            return;
+          }
+          if (type == 'area') {
+            _this.area = JSON.parse(res.data.Msg).ds;
+            console.log("区", _this.area);
+            return;
+          }
+        } else {
+          _this.$tool.showTip(res.data.Msg);
+        }
+      });
+    },
+    changeDefault: function changeDefault() {
+      // 是否为默认
+
     } } };exports.default = _default;
 
 /***/ }),
