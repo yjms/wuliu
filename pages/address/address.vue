@@ -2,6 +2,9 @@
 	<view class="whole">
 		<view class="bgWhile setbuttom">
 			<view class="header row">
+				<view class="sjadd" :class="currTab==0?'tabAct':''" @click="changTab(0)">
+					所有地址
+				</view>
 				<view class="jjadd" :class="currTab==1?'tabAct':''" @click="changTab(1)">
 					寄件地址
 				</view>
@@ -9,58 +12,46 @@
 					收件地址
 				</view>
 			</view>
-			<view class="searchIpt flex_col row1 bgWhile">
-				<text class="iconfont icon-chazhao"></text>
-				<input type="text" placeholder="输入姓名、电话、地址快速查找" />
-			</view>
 		</view>
 		<view class="nodataBox" v-if="!hasData">
 			<Nodata></Nodata>
 		</view>
 		<view class="ullist" v-if="hasData">
 			
-			<view class="ulitem row bgWhile flex_col">
+			<view class="ulitem row bgWhile flex_col" v-for="(it,ix) in addressData" :key="it"  @click="checkAddress(it)">
 				<view class="leftinfo">
 					<view class="ltop flex_col">
 						<view>
-							<text>张三</text>
-							<text class="photoTxt">182****9006</text>
+							<text>{{it.ma_receiver}}</text>
+							<text class="photoTxt">{{it.ma_Mobile}}</text>
 						</view>
-						<view class="defaults">默认</view>
+						<!-- <view class="defaults">默认</view> -->
 					</view>
 					<view class="lcenter">
-						<text>北京-北京市-东城区</text>
+						<text>{{it.zoneName}}</text>
 					</view>
 					<view class="lfoot">
-						还是经济特区
+						{{it.ma_address}}
 					</view>	
 				</view>
-				<view class="editBox iconfont icon-bianjimian" @click="editAddress"></view>
-				<view class="delBox iconfont icon-shanchu" @click="delAddress"></view>
+				<view class="editBox iconfont icon-bianjimian" @click.stop="editAddress('edit',it.ZoneID,ix)"></view>
+				<view class="delBox iconfont icon-shanchu" @click.stop="delAddress(it.ma_id)"></view>
 			</view>
-			
-			<view class="ulitem row bgWhile flex_col">
-				<view class="leftinfo">
-					<view class="ltop flex_col">
-						<view>
-							<text>张三</text>
-							<text class="photoTxt">182****9006</text>
-						</view>
-						<view class="defaults">默认</view>
-					</view>
-					<view class="lcenter">
-						<text>北京-北京市-东城区</text>
-					</view>
-					<view class="lfoot">
-						还是经济特区
-					</view>	
-				</view>
-				<view class="editBox iconfont icon-bianjimian" @click="editAddress"></view>
-				<view class="delBox iconfont icon-shanchu" @click="delAddress"></view>
-			</view>
-			
 		</view>
-		<view class="address" @click="editAddress('edit')">添加地址</view>
+		<view class="address" @click="editAddress('add')">添加地址</view>
+		
+		<view class="delPop" v-if="delPop">
+			<view class="delcenter animated bounceIn">
+				<view class="top">
+					确定删除该地址？
+				</view>
+				<view class="foot">
+					<view class="cancel" @click="showhide(1)">取消</view>
+					<view class="comfim" @click="showhide(2)">确定</view>
+				</view>
+			</view>
+		</view>
+		
 	</view>
 </template>
 
@@ -73,23 +64,88 @@
 		data() {
 			return {
 				hasData:true,// 是否有数据	
-				currTab:1
+				currTab:0,// 默认查寄件地址
+				addressData:[],// 存放地址数据
+				delPop:false,// 默认不显示删除弹窗
+				delId:null,// 删除的地址id
+				pram:{},// 保存地址栏参数
 			}
 		},
 		mounted(){
 			
 		},
+		onShow(){
+			this.getAddress();
+		},
+		onLoad(pram){
+			// console.log("看看pram",pram);
+			this.pram = pram;
+		},
 		methods:{
+			checkAddress(obj){
+				//  选择地址
+				let dat = {
+					type:this.pram,
+					obj:obj
+				};
+				this.pram.ix==1?this.$tool.setstorage("pram",JSON.stringify(dat)):this.$tool.setstorage("pram2",JSON.stringify(dat));
+				this.$tool.jump_back();
+			},
+			showhide(type){
+				//  显示删除弹窗
+			 this.delPop = !this.delPop;
+			 if(type==2){
+				 let dat = {
+					 functionType:17,
+					 weixinID:this.$tool.getstorage("openid"),
+					 ma_id:this.delId
+				 }
+				 this.$api(dat).then(res=>{
+					 if(res.data.MsgID==1){
+						 this.$tool.showTip("删除成功！");
+						 this.getAddress();
+					 }else{
+						 this.$tool.showTip(res.data.Msg);
+					 }
+				 })
+			 }
+			},
 			changTab(tab){
+				// 切换选项卡
+				if(this.currTab ==  tab){
+					return
+				}
 				this.currTab = tab;
+				this.getAddress();
 			},
-			editAddress(){
+			getAddress(){
+				// 获取地址数据
+				let dat = {
+					functionType:16,
+					weixinID:this.$tool.getstorage("openid"),
+					m_type:this.currTab
+				}
+				this.$api(dat).then(res=>{
+					if(res.data.MsgID==1){
+						let arr = JSON.parse(res.data.Msg).ds; 
+						this.addressData = arr;
+						arr.length>0?this.hasData = true : this.hasData = false;
+						// console.log("看看地址数据",arr);
+					}else{
+						this.$tool.showTip(res.data.Msg);
+					}
+				})
+			},
+			editAddress(type,addID='0',ix=0){
 				// 编辑地址
-				this.$tool.jump_nav("/pages/editaddress/editaddress")
+				this.$tool.setstorage("address",JSON.stringify(this.addressData[ix]));
+				this.$tool.jump_nav(`/pages/editaddress/editaddress?type=${type}&jj_type=${this.currTab==0?1:this.currTab}&addID=${addID}`);
 			},
-			delAddress(){
+			delAddress(adId){
 				// 删除地址
-				console.log("删除地址")
+				// console.log("删除地址",adId)
+				this.delId = adId;
+				this.showhide(1,adId);
 			}
 		}
 	}
@@ -252,4 +308,57 @@
 		line-height: 65upx;
 		z-index: 9;
 	}
+	//  删除提示框
+	.delPop{
+		width: 100vw;
+		height: 100vh;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background-color: rgba(0,0,0,.5);
+		position: fixed;
+		left: 0;
+		top: 0;
+		z-index: 99;
+		.delcenter{
+			width: 580upx;
+			height: 300upx;
+			border-radius: 20upx;
+			background-color: #FFFFFF;
+			display: flex;
+			flex-direction: column;
+			overflow: hidden;
+			.top{
+				flex: 1;
+				width: 100%;
+				// background-color: red;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-size: 32upx;
+				color: #666;
+			}
+			.foot{
+				height: 75upx;
+				display: flex;
+				border-top: 1upx solid #dedede;
+				view{
+					width: 50%;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					height: 100%;
+					color: #888;
+				}
+				.cancel{
+					border-right: 1upx solid #dedede;
+					box-sizing: border-box;
+				}
+				.comfim{
+					color: $all-font-Tcolor;
+				}
+			}
+		}
+	}
+	
 </style>

@@ -16,6 +16,8 @@
 		justify-content: center;
 		align-items: center;
 		flex-direction: column;
+		// background-color: red;
+		// background-color: $self-body-bgColor;
 		color: #dddddd;
 		.nodata{
 			font-size: 80upx;

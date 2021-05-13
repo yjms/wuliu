@@ -172,6 +172,9 @@
   font-size: 28rpx;
   color: #888;
 }
+.delRow .numItem text.data-v-ac11077a {
+  width: 30rpx;
+}
 .numBox.data-v-ac11077a {
   display: -webkit-box;
   display: -webkit-flex;
@@ -226,6 +229,7 @@
 .popBody.data-v-ac11077a {
   width: 100%;
   height: 100%;
+  padding-top: 20rpx;
 }
 .priceBox.data-v-ac11077a {
   padding-top: 54rpx;

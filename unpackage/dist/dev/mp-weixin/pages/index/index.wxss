@@ -119,61 +119,28 @@
   margin-top: 18rpx;
 }
 .gzhBox {
-  width: 694rpx;
-  background-color: #484848;
-  height: 94rpx;
-  border-radius: 47rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  position: fixed;
-  bottom: 80rpx;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
-  padding: 0 32rpx;
-  box-sizing: border-box;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
-}
-.gzhBox text {
-  color: #FFFFFF;
-  font-size: 28rpx;
-}
-.gzhBox .close {
-  -webkit-flex-shrink: 0;
-          flex-shrink: 0;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-          justify-content: center;
-  color: #FFFFFF;
-  font-size: 46rpx;
-}
-.gzhBox .gzBtn {
-  width: 165rpx;
+  width: 150rpx;
   height: 60rpx;
-  border-radius: 30rpx;
+  position: fixed;
+  right: 0;
+  bottom: 100rpx;
+  overflow: hidden;
+}
+.hzBox {
+  width: 200rpx;
+  height: 60rpx;
+  border-radius: 40rpx;
+  background-color: #5393FD;
+  background-image: -webkit-linear-gradient(left, #5393FD, #FA7240);
+  background-image: linear-gradient(to right, #5393FD, #FA7240);
+  color: #fff;
+  font-size: 26rpx;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-          justify-content: center;
-  color: #FFFFFF;
-  font-size: 26rpx;
-  margin: 0;
-  background-image: -webkit-linear-gradient(left, #5097E8, #377BFB);
-  background-image: linear-gradient(to right, #5097E8, #377BFB);
+  line-height: 60rpx;
+  padding-left: 26rpx;
+  box-sizing: border-box;
 }
 .iconBox {
   display: -webkit-box;

@@ -1,4 +1,5 @@
 {
+  "navigationBarTitleText": "查物流",
   "usingComponents": {
     "nodata": "/pages/components/nodata"
   }

@@ -67,6 +67,7 @@
   -webkit-box-align: center;
   -webkit-align-items: center;
           align-items: center;
+  background-color: #F2F2F2;
 }
 .header {
   width: 694rpx;
@@ -75,13 +76,21 @@
   display: flex;
   position: fixed;
   left: 50%;
-  top: 20rpx;
+  top: 0rpx;
+  z-index: 9;
+  padding: 20rpx 0;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  width: 100%;
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%);
   -webkit-box-align: center;
   -webkit-align-items: center;
           align-items: center;
   box-sizing: border-box;
+  background-color: #fff;
 }
 .iptBox {
   display: -webkit-box;
@@ -115,6 +124,11 @@
           justify-content: space-around;
   border-bottom: 2rpx solid #F2F2F2;
   box-sizing: border-box;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: #FFFFFF;
+  z-index: 9;
 }
 .navBox > .navItem {
   display: -webkit-box;
@@ -150,6 +164,11 @@
   -webkit-box-align: center;
   -webkit-align-items: center;
           align-items: center;
+  position: fixed;
+  left: 0;
+  top: 110rpx;
+  z-index: 9;
+  background-color: #fff;
 }
 .navTime > .timeItem {
   width: 20%;
@@ -221,20 +240,7 @@
           flex: 1;
 }
 .ydList {
-  width: 100%;
-  height: calc(100vh - 300rpx);
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-          flex-direction: column;
-  margin-top: 18rpx;
-  position: relative;
+  padding-top: 240rpx;
 }
 .yditem {
   width: 100%;
@@ -369,7 +375,9 @@
 }
 .nomore {
   position: absolute;
-  bottom: -10rpx;
+  width: 100vw;
+  text-align: center;
+  background-color: #F2F2F2;
   left: 50%;
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%);
@@ -450,5 +458,80 @@
   position: absolute;
   right: 10rpx;
   top: 10rpx;
+}
+.selectBox {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.3);
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 999;
+}
+.selectBox .topBox {
+  width: 100%;
+  padding-bottom: 30rpx;
+  padding-top: 30rpx;
+  box-sizing: border-box;
+  background-color: #FFFFFF;
+}
+.selectBox .rowBox {
+  width: 90%;
+  height: 70rpx;
+  margin: 0 auto;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  margin-bottom: 20rpx;
+}
+.selectBox .rowBox text {
+  color: #666;
+  font-size: 28rpx;
+  width: 120rpx;
+  text-align: right;
+}
+.selectBox .rowBox input, .selectBox .rowBox > view {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
+  height: 60rpx;
+  font-size: 28rpx;
+  padding-left: 20rpx;
+  box-sizing: border-box;
+  margin-left: 20rpx;
+  border-radius: 15rpx;
+  border: 0.5rpx solid #dedede;
+}
+.selBtn {
+  width: 60%;
+  margin: 0 auto;
+  height: 70rpx;
+  background-color: #5393FD;
+  color: #FFFFFF;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  font-size: 28rpx;
+  border-radius: 10rpx;
+  margin-top: 40rpx;
+}
+.uni-input {
+  width: 100%;
+  height: 60rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
 }
 

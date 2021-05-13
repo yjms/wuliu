@@ -3,7 +3,7 @@
 		<view class="header">
 			<view class="iptBox">
 				<text class="seachIcon iconfont icon-chaxun"></text>
-				<input type="text" placeholder="请输入运单号" v-model="keyword"   @focus="search(1)" @blur="search(2)"/>
+				<input type="text" placeholder="请输入运单号" v-model="keyword"   @focus="search(1)"/>
 			</view>
 			<view class="searchTxt" v-show="searchStatus" @click="search(3)">
 				查询
@@ -23,12 +23,14 @@
 				<view class="statusTxt">{{it.statusTxt}}</view>
 				<view class="rigInfo">
 					<!-- 5-7-7 -->
-					<text class="time">{{it.addtime?it.addtime:'暂无'}}</text>
+					<!-- <text class="time">{{it.addtime?it.addtime:'暂无'}}</text> 2019143-->
 					<text>{{it.content}}</text>
-					<view class="start" v-show="index==0">发</view>
-					<view class="end" v-show="index != 0  && index== (dataList.length-1)">收</view>
-					<view class="startbox"  :class="it.status==1?'hsbox':'lsbox'" v-show="index ==0 || index == (dataList.length-1)"></view>
-					<view class="center" :class="it.status==1?'hsbox':'lsbox'" v-show="index !=0 && index != (dataList.length-1)"></view>
+					<!-- <view class="start" v-show="index==1">发</view> -->
+					<view class="end" v-show="it.content.indexOf('签收信息')> -1">签</view>
+					<!-- 大菱形 -->
+					<view class="startbox"  :class="it.status==1?'hsbox':'lsbox'" v-show="it.content.indexOf('签收信息')> -1"></view>
+					<!-- 小菱形 -->
+					<view class="center" :class="it.status==1?'hsbox':'lsbox'" v-show="!it.content.indexOf('签收信息')> -1"></view>
 				</view>
 			</view>
 		</view>
@@ -124,7 +126,7 @@
 					if(res.data.MsgID==1){
 						this.dataList = JSON.parse(res.data.Msg).ds;
 						let arr = this.dataList;
-						console.log(arr,'9989');
+						// console.log(arr,'9989');
 						arr = arr.map((it,ix)=>{
 							if(ix==0){
 								it.status = 2;
@@ -133,7 +135,9 @@
 							}
 							return it;
 						})
+						console.log("物流信息2",arr);
 						this.dataList = arr;
+						console.log("物流信息",this.dataList)
 						this.dataList.length>0?this.hasData=true : this.hasData=false;
 					}else{
 						this.hasData=false;
@@ -168,6 +172,7 @@
 		width: 100vw;
 		min-height: 100vh;
 		flex-direction: column;
+		background-color: $self-body-bgColor;
 	}
 	.bgWhile{
 		background-color: #FFFFFF;
@@ -263,10 +268,10 @@
 		justify-content: center;
 		flex-direction: column;
 	}
-	.kjList>.nodata{
-		font-size: 80upx;
-		color: #ddd;
-	}
+	// .kjList>.nodata{
+	// 	font-size: 80upx;
+	// 	color: #ddd;
+	// }
 	.kjList>.noText{
 		font-size: 32upx;
 		color: #ddd;
@@ -305,9 +310,6 @@
 		align-items: center;
 		box-sizing: border-box;
 	}
-	.centerBox{
-		// padding-top: 190upx;
-	}
 	.itemBox{
 		display: flex;
 		width: 100%;
@@ -333,7 +335,7 @@
 	.itemBox>.rigInfo::before{
 		content: "";
 		width: 0upx;
-		height: 50upx;
+		// height: 50upx;
 		border-left: 2upx dashed $all-font-Hcolor;
 		position: absolute;
 		left: 0;
@@ -366,7 +368,7 @@
 	.startbox,.center{
 		width: 46upx;
 		height: 46upx;
-		background-color: $all-font-Tcolor;
+		background-color: #dedede;
 		border-radius: 8upx;
 		position: absolute;
 		left: 0;
@@ -376,7 +378,7 @@
 	.center{
 		width: 20upx;
 		height: 20upx;
-		top: 16upx;
+		top: 0upx;
 	}
 	.hsbox{
 		background-color: #dedede;
@@ -388,7 +390,8 @@
 	.nodata{
 		flex: 1;
 		width: 100%;
-		height: 50upx;
+		height: 80vh;
 		// background-color: red;
 	}
+	
 </style>

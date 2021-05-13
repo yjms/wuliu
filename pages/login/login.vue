@@ -70,18 +70,22 @@
 					uni.login({
 						success(res){
 							console.log("code",res);
-							uni.request({
-								url:`https://api.weixin.qq.com/sns/jscode2session?appid=wx7175a3a88c7271b6&secret=678e3455b1f1cee4cf27fea5954c0100&js_code=${res.code}`,
-								header:{'content-type':'application/x-www-form-urlencoded'},
-								method:"POST",
-								success:res2=>{
-									 let openid = res2.data.openid;
-									 that.gologin(openid);
-									 that.$tool.setstorage("openid",openid);
+							let dat = {
+								functionType:22,
+								Code:res.code
+							}
+							that.$api(dat).then(res=>{
+								if(res.data.MsgID==1){
+									let openid = res.data.Msg;
+									that.gologin(openid);
+									that.$tool.setstorage("openid",openid);
+								}else{
+									that.$tool.showTip(res.data.Msg)
 								}
 							})
 						}
 					})	
+						
 				}else{
 					that.gologin(that.$tool.getstorage("openid"));
 				}

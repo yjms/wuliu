@@ -8,14 +8,14 @@
 			</view>
 			<!-- 寄件备注 -->
 			<view class="popBody" v-if="showType==3">
-				<view class="ulremark row">
+				<view class="ulremark row"  v-if="false">
 					<view class="rmkItem" v-for="(item,index) in remark" :key="item" :class="kdType == index+1 ? 'kdact':''" @click="()=>{this.kdType = index + 1}">
 						{{item}}
 					</view>
 				</view>
 				<view class="remarkarea">
-					<textarea  placeholder="补充说明" maxlength="30"/>
-					<text>0/30</text>
+					<textarea  placeholder="备注说明" maxlength="30" v-model="remarkTxt"/>
+					<text>{{remarkTxt.length}}/30</text>
 				</view>
 			</view>
 			<!-- 保价 -->
@@ -23,14 +23,14 @@
 				<view class="priceBox row flex_col">
 					<text>保价金额</text>
 					<view class="priceIpt flex_col">
-						<input type="text" value="" />
+						<input type="text" v-model="bjprice" />
 						<text>元</text>
 					</view>
 				</view>
-				<view class="priceTxt flex_col row">
+			<!-- 	<view class="priceTxt flex_col row">
 					<text class="bjTxt">报价费: </text>
 					<text class="bjNum">150</text>
-				</view>
+				</view> -->
 				<view class="priTip">
 					当快件在运输过程中发生遗失、破损时、我们将在第一时间提供理赔受理
 				</view>
@@ -45,11 +45,11 @@
 			</view>
 			
 			<view class="popBody" v-if="showType==1">
-					<view class="ulTitle row">
+					<view class="ulTitle row" v-if="false">
 						选择物品类型
 					</view>
 					
-					<view class="ullist row">
+					<view class="ullist row" v-if="true">
 						<view class="wpitem" v-for="(item,index) in things" :class="wpType == index+1 ? 'wpact':''" :key="item" @click="()=>{this.wpType = index + 1}">
 							{{item}}
 						</view>
@@ -59,36 +59,48 @@
 						禁寄物品: 各种枪支弹药、易燃易爆、化学危险品、毒品、各类生化制品、传染性物质、各类非法伪造、侵权物品...
 					</view>
 					
-					<view class="ygTxt row">
+					<!-- <view class="ygTxt row">
 						预估重量
-					</view>
+					</view> -->
 					
 					<view class="delRow row">
 						<text class="wxtip">注: 实际重量以快递员确定为准</text>
 						<view class="numBox">
-							<view class="runBox">-</view>
+							<view class="runBox" @click="reduce(1)">-</view>
 							<view class="numItem">
-								<input type="text" value="1"/>
+								<input type="text" v-model="wigths"/>
 								<text>kg</text>
 							</view>
-							<view class="runBox">+</view>
+							<view class="runBox" @click="addprice(1)">+</view>
 						</view>
 					</view>
 					
 					<view class="delRow row">
 						<text class="wxtip">注: 实际体积以快递员确定为准</text>
 						<view class="numBox">
-							<view class="runBox">-</view>
+							<view class="runBox"  @click="reduce(2)">-</view>
 							<view class="numItem">
-								<input type="text" value="1"/>
+								<input type="text" v-model="tiji"/>
 								<text>m³</text>
 							</view>
-							<view class="runBox">+</view>
+							<view class="runBox" @click="addprice(2)">+</view>
+						</view>
+					</view>
+					
+					<view class="delRow row">
+						<text class="wxtip">注: 实际件数以快递员确定为准</text>
+						<view class="numBox">
+							<view class="runBox"  @click="reduce(3)">-</view>
+							<view class="numItem">
+								<input type="text" v-model="wpthings"/>
+								<text>件</text>
+							</view>
+							<view class="runBox" @click="addprice(3)">+</view>
 						</view>
 					</view>
 			</view>
 			
-			<view class="comBtn">
+			<view class="comBtn" @click="compileCheck">
 				确 定
 			</view>
 		</view>
@@ -111,15 +123,79 @@
 				titleList:['选择物品类型重量和体积','保价','对快递员说'],
 				wpType:0,// 默认没物品类型0
 				kdType:0,//对快递员说 类型
+				wigths:0,//重量
+				tiji:0,// 体积
+				wpthings:0,// 物品件数
+				remarkTxt:'', // 备注
+				bjprice:'',// 保价多少钱
 			}
 		},
 		mounted(){
 			
 		},
 		methods:{
+			updata(obj){
+				// 更新数据
+				console.log("看看obj",obj);
+				this.wpType = obj.mo_pinming;
+				this.wigths = obj.mo_weight;
+				this.tiji = obj.mo_volume;
+				this.wpthings = obj.mo_jianshu;
+				this.remarkTxt = obj.mo_qujianbeizhu;
+				this.bjprice = obj.mo_baoxianjiazhi;
+			},
+			reduce(type){
+				if(type == 1){
+					let price = this.wigths;
+					price = --price;
+					this.wigths = price > 0 ?price : 0;
+				}else if(type==2){
+					let price = this.tiji;
+					price = --price;
+					this.tiji = price > 0 ?price : 0;
+				}else{
+					let price = this.wpthings;
+					price = --price;
+					this.wpthings = price > 0 ?price : 0;
+				}
+			},
+			addprice(type){
+				if(type == 1){
+					let price = this.wigths;
+					price = ++price;
+					this.wigths = price;
+				}else if(type==2){
+					let price = this.tiji;
+					price = ++price;
+					this.tiji = price;
+				}else{
+					let price = this.wpthings;
+					price = ++price;
+					this.wpthings = price;
+				}
+			},
 			hidePop(){
 				this.$parent.showType = 0;
 				// console.log(this.showType) 
+			},
+			compileCheck(){
+				console.log("点确定",this.$parent.showType);
+				switch(this.$parent.showType){
+					case 1:// 重量体积类型
+						this.$parent.wigths = this.wigths;
+						this.$parent.tiji = this.tiji;
+						this.$parent.wpthings = this.wpthings;
+						this.$parent.wpType = this.wpType; 
+						console.log("物品名字",this.wpType)
+					break;
+					case 2:// 保价
+					  this.$parent.bxprice = this.bjprice;
+					break;
+					case 3:// 对快递员说
+						this.$parent.remark = this.remarkTxt;
+					break;
+				}
+				this.hidePop();
 			}
 		}
 		
@@ -239,6 +315,9 @@
 			box-sizing: border-box;
 			font-size: 28upx;
 			color: $all-font-Hcolor;
+			text{
+				width: 30upx;
+			}
 		}
 	}
 	.numBox{
@@ -277,6 +356,7 @@
 	.popBody{
 		width: 100%;
 		height: 100%;
+		padding-top: 20upx;
 	}
 	//  第二个弹窗样式
 	.priceBox{

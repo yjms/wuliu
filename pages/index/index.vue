@@ -6,7 +6,6 @@
 		<view class="ullist">
 			<view class="items">
 				<view class="iconBox iconfont icon-yuyue">
-					
 				</view>
 				<view class="titleBox" @click="jump(1)">
 				   <text class="itemTitle">预约寄件</text>
@@ -63,6 +62,14 @@
 				</view>
 			</view>
 		</view>
+		<!-- 查看我的预约寄件 -->
+		
+		<view class="gzhBox" @click="jump('other')">
+			<view class="hzBox">
+			    我的寄件
+				<!-- <text class="iconfont icon-guanbi close"></text> -->
+			</view>
+		</view>
 		<!-- 关注公众号的盒子 -->
 <!-- 		<view class="gzhBox">
 			<view class="close iconfont icon-guanbi"></view>
@@ -96,19 +103,46 @@
 			// console.log(this.$api)
 		},
 		onLoad() {
-			
+			this.getopenid();
 		},
 		methods: {
+			getopenid(){
+				let that = this;
+				if(!this.$tool.getstorage("openid")){
+					uni.login({
+						success(res){
+							let dat = {
+								functionType:22,
+								Code:res.code
+							}
+							that.$api(dat).then(res=>{
+								if(res.data.MsgID==1){
+									let openid = res.data.Msg;
+									that.$tool.setstorage("openid",openid);
+								}else{
+									that.$tool.showTip(res.data.Msg)
+								}
+							})
+						}
+					})	
+				}
+			},
 			jump(nav){
-				console.log(nav);
+				// console.log(nav);
+				this.$tool.setstorage("pram","");
+				this.$tool.setstorage("pram2","");
 				let kh_id = this.$tool.getstorage("xykh_id");
-				if((nav == 3 || nav == 4 || nav == 5) && !kh_id ){ // 查看库存 和发货明细需要登录
+				if((nav == 3 || nav == 4 || nav == 5 || nav=="other") && !kh_id ){ // 查看库存 和发货明细需要登录
 					this.$tool.jump_nav("/pages/login/login")
+					return
+				}
+				if(nav == "other"){
+					this.$tool.jump_nav('/pages/sendThing/sendThing');
 					return
 				}
 				if(nav == 4 || nav == 5 ||  nav == 3){
 					this.$tool.setstorage("pageType",nav);
-					this.$tool.jump_switch(`/pages/checkSite/checkSite?ix=${nav}`);
+					this.$tool.jump_nav(`/pages/checkSite/checkSite?ix=${nav}`);
 					return;
 				}
 				let arr = ["/pages/appoint/appoint",
@@ -116,6 +150,10 @@
 						   `/pages/orderlist/orderlist?ix=${nav}`,
 						   `/pages/checkSite/checkSite?ix=${nav}`,
 				]
+				if(nav == 2){
+					this.$tool.jump_switch(`/pages/logisticsinfo/logisticsinfo`);
+					return
+				}
 				this.$tool.jump_nav(arr[nav - 1]);
 			},
 			jump_nav(){
@@ -205,45 +243,71 @@
 		font-weight: 400;
 		margin-top: 18upx;
 	}
+	// .gzhBox{
+	// 	width: $all-width;
+	// 	background-color: #484848;
+	// 	height: 94upx;
+	// 	border-radius: 47upx;
+	// 	display: flex;
+	// 	position: fixed;
+	// 	bottom: 80upx;
+	// 	// margin-top: 18upx;
+	// 	align-items: center;
+	// 	padding: 0 32upx;
+	// 	box-sizing: border-box;
+	// 	justify-content: space-between;
+	// 	text{
+	// 		color: #FFFFFF;
+	// 		font-size: 28upx;
+	// 		// margin-left: 28upx;
+	// 	}
+	// 	.close{
+	// 		flex-shrink: 0;
+	// 		display: flex;
+	// 		align-items: center;
+	// 		justify-content: center;
+	// 		color: #FFFFFF;
+	// 		font-size: 46upx;
+	// 	}
+	// 	.gzBtn{
+	// 		// #6D6D6D #5897E3
+	// 		width: 165upx;
+	// 		height: 60upx;
+	// 		border-radius: 30upx;
+	// 		display: flex;
+	// 		align-items: center;
+	// 		justify-content: center;
+	// 		color: #FFFFFF;
+	// 		font-size: 26upx;
+	// 		margin: 0;
+	// 		background-image:linear-gradient(to right,#5097E8,#377BFB) ;
+	// 	}
+	// }
+	
 	.gzhBox{
-		width: $all-width;
-		background-color: #484848;
-		height: 94upx;
-		border-radius: 47upx;
-		display: flex;
+		width: 150upx;
+		height: 60upx;
+		// background-color: red;
 		position: fixed;
-		bottom: 80upx;
-		// margin-top: 18upx;
-		align-items: center;
-		padding: 0 32upx;
+		right: 0;
+		bottom: 100upx;
+		overflow: hidden;
+		// border-radius: ;
+	}
+	.hzBox{
+		width: 200upx;
+		height: 60upx;
+		border-radius: 40upx;
+		background-color: $all-font-Tcolor;
+		// background-color: ;
+		background-image: linear-gradient(to right,#5393FD,#FA7240);
+		color: #fff;
+		font-size: 26upx;
+		display: flex;
+		line-height: 60upx;
+		// align-items: center;
+		padding-left: 26upx;
 		box-sizing: border-box;
-		justify-content: space-between;
-		text{
-			color: #FFFFFF;
-			font-size: 28upx;
-			// margin-left: 28upx;
-		}
-		.close{
-			flex-shrink: 0;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			color: #FFFFFF;
-			font-size: 46upx;
-		}
-		.gzBtn{
-			// #6D6D6D #5897E3
-			width: 165upx;
-			height: 60upx;
-			border-radius: 30upx;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			color: #FFFFFF;
-			font-size: 26upx;
-			margin: 0;
-			background-image:linear-gradient(to right,#5097E8,#377BFB) ;
-		}
 	}
 	.iconBox{
 		display: flex;

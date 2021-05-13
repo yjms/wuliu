@@ -25,8 +25,10 @@ class tools {
 		})
 	}
 	jump_switch(url) { // 导航栏跳转
-		uni.switchTab({
-			url: `${url}`
+		uni.navigateTo({ // 不请空页面栈跳转
+			url: `${url}`,
+			animationType: 'pop-in',
+			animationDuration: 300
 		})
 	}
 	jump_back(url) { // 返回 传数字

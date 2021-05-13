@@ -210,6 +210,10 @@
 .ulItem > .right > .selectTxt.data-v-59bd7eec {
   margin-right: 18rpx;
   font-size: 26rpx;
+  max-width: 400rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .ulItem > .right > .selectIcon.data-v-59bd7eec {
   margin-right: 20rpx;
@@ -261,5 +265,48 @@
 .ulItem > .right > view.qjact.data-v-59bd7eec {
   color: #5393FD;
   border: 1rpx solid #5393FD;
+}
+.rowBox.data-v-59bd7eec {
+  width: 100%;
+  height: 40rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.rowBox .name.data-v-59bd7eec, .rowBox .phone.data-v-59bd7eec {
+  max-width: 70%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.rowBox .phone.data-v-59bd7eec {
+  padding-left: 20rpx;
+}
+.gzhBox.data-v-59bd7eec {
+  width: 150rpx;
+  height: 60rpx;
+  position: fixed;
+  right: 0;
+  bottom: 180rpx;
+  overflow: hidden;
+}
+.hzBox.data-v-59bd7eec {
+  width: 200rpx;
+  height: 60rpx;
+  border-radius: 40rpx;
+  background-color: #5393FD;
+  background-image: -webkit-linear-gradient(left, #5393FD, #FA7240);
+  background-image: linear-gradient(to right, #5393FD, #FA7240);
+  color: #fff;
+  font-size: 26rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  line-height: 60rpx;
+  padding-left: 26rpx;
+  box-sizing: border-box;
 }
 

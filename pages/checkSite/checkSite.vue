@@ -3,7 +3,7 @@
 		<view class="header">
 			<view class="iptBox">
 				<text class="seachIcon iconfont icon-chaxun"></text>
-				<input type="text" placeholder="请输入运单号" v-model="keyword"   @focus="search(1)" @blur="search(2)"/>
+				<input type="text" placeholder="请输入订单号" v-model="keyword"   @focus="search(1)" @blur="search(2)"/>
 			</view>
 			<view class="searchTxt" v-show="searchStatus" @click="search(3)">
 				查询
@@ -12,44 +12,38 @@
 				<!-- 扫码 -->
 			</view>
 		</view>
-		<view class="navBox">
-			<!-- <view class="navItem" :class="currTab==1?'active':''" @click="changeTab(1)">
-				我寄出的
-			</view>
-			<view class="navItem" :class="currTab==2?'active':''" @click="changeTab(2)">
-				我收到的
-			</view>
-			<view class="navItem" :class="currTab==3?'active':''" @click="changeTab(3)"> 
-				我关注的
-			</view> -->
-		</view>
+		<!-- <view class="navBox">
+		</view> -->
 		<view class="navTime">
 		<!-- 	<view class="timeItem" :class="timeTab==1?'active':''" @click="changeTab(1,'time')">
 				今天
 			</view> -->
-			<view class="timeItem" :class="timeTab==2?'active':''" @click="changeTab(2,'time')">
-				近七天
+			<view class="timeItem" :class="timeTab==2?'active':''" @click="changeTab(2,'time',array[0])">
+				{{pageType == 5 ? array[0]:'近七天'}} 
 			</view>
-			<view class="timeItem" :class="timeTab==3?'active':''" @click="changeTab(3,'time')">
-				近一个月
+			<view class="timeItem" :class="timeTab==3?'active':''" @click="changeTab(3,'time',array[1])">
+				{{pageType == 5 ? array[1]:'近一个月'}} 
 			</view>
-			<view class="timeItem" :class="timeTab==1?'active':''" @click="changeTab(1,'time')">
-				近俩个月
+			<view class="timeItem" :class="timeTab==1?'active':''" @click="changeTab(1,'time',array[2])">
+				{{pageType == 5 ? array[2]:'近俩个月'}} 
 			</view>
 			<view class="timeItem" :class="timeTab==4?'active':''" @click="changeTab(4,'time')">
-				自定义
+				 <picker @change="bindPickerChange" :value="index" :range="array" v-if="pageType==5">
+					<view class="uni-input">自定义</view>
+				</picker>
+				<text v-if="pageType != 5">自定义</text>
 			</view>
 		</view>
 		<view class="kjList" v-if="!hasData">
 			<text class="iconfont icon-zanwushuju nodata"></text>
 			<text class="noText">暂无数据</text>
 		</view>
-		<view class="setbg row" v-if="hasData">
-			<scroll-view class="ydList" scroll-y="true"  lower-threshold="30" @scrolltolower="scrollLower">
+		<view class="setbg row ydList" v-if="hasData">
+			<!-- <scroll-view class="ydList" scroll-y="true"  lower-threshold="30" @scrolltolower="scrollLower"> -->
 				<view class="setposi">
 					<view class="bgWhile row1 yditem" v-for="(it,index) in orderData" :key="it.Row" @click="lookDel(it.daidan_no)">
 						<view class="ydHeader" @click.stop="copeText(it.daidan_no)">
-							<text>运单号: {{it.daidan_no}} </text>
+							<text>订单号: {{it.daidan_no}} </text>
 							<text class="iconfont icon-fuzhicopy12"></text>
 						</view>
 						<view class="arive">
@@ -83,14 +77,14 @@
 								查看明细
 							</view>
 							<view class="del" @click="electronicOrder(it.daidan_no)">
-								电子运单
+								电子订单
 							</view>
 						</view>
 					</view>
 				<text class="nomore" v-if="moreData">~没有更多数据啦~</text>
 				</view>
 				
-			</scroll-view>
+			<!-- </scroll-view> -->
 		</view>
 		<uni-calendar ref="calendar" :clear-date="true" :date="info.date" :insert="info.insert" :lunar="info.lunar" :startDate="info.startDate" :endDate="info.endDate" :range="info.range" @confirm="confirm" @close="close" />
 		<!-- 关注公众号的盒子 -->
@@ -107,6 +101,47 @@
 				<text class="title">{{pageType == 3?'库存':'订单'}}汇总</text>
 				<view class="rowTxt" v-for="it in popData" :key="it">
 					{{it.name}} : {{popObj[it.type] || ""}}
+				</view>
+			</view>
+		</view>
+		<!-- 显示查询条件-->
+		<view class="selectBox" v-show="zdySelectPop" @click="()=>{this.zdySelectPop = false}">
+			<view class="topBox" @click.stop>
+				<view class="rowBox">
+					<text>单号:</text>
+					<input type="text" placeholder="单号" v-model="keyword"/>
+				</view>
+				<view class="rowBox">
+					<text>开始时间:</text>
+					<!-- <input type="text" placeholder="开始时间"/> -->
+					<view>
+						<picker mode="date" :value="startTime" :start="startDate" :end="endDate" @change="bindDateChange">
+							<view class="uni-input">{{startTime?startTime:'选择开始时间'}}</view>
+						</picker>
+					</view>
+				</view>
+				<view class="rowBox">
+					<text>截止时间:</text>
+					<view>
+						<picker mode="date" :value="endTime" :start="startDate" :end="endDate" @change="bindDateChange2">
+							<view class="uni-input">{{endTime?endTime:'选择结束时间'}}</view>
+						</picker>
+					</view>
+				</view>
+				<view class="rowBox">
+					<text>始发站:</text>
+					<input type="text" placeholder="始发站" v-model="startAddress"/>
+				</view>
+				<view class="rowBox">
+					<text>目的站:</text>
+					<input type="text" placeholder="目的站" v-model="endAddress"/>
+				</view>
+				<view class="rowBox">
+					<text>收货人:</text>
+					<input type="text" placeholder="收货人" v-model="acceptMan"/>
+				</view>
+				<view class="selBtn" @click="selectData">
+					查询
 				</view>
 			</view>
 		</view>
@@ -138,6 +173,9 @@
 	}
 	export default {
 		data() {
+			// const currentDate = this.getDate({
+			// 	format: true
+			// })
 			return {
 				currTab:0,//默认显示今天的单号
 				timeTab:0,// 默认选择今天查询 
@@ -145,11 +183,16 @@
 				keyword:"",// 搜索关键字
 				hasData:true,// 默认没数据
 				pageType:null,// 看看页面类型
+				array: ['1月', '3月', '4月', '5月'], // picker 组件数据
 				orderData:[],// 订单数据
 				currIndex:1,// 默认查询第一页的数据
 				needReff:true,// 是否可以加载更多
 				showCalendar: false,
-				startTime:'',
+				startTime:'', //
+				zdySelectPop:false,// 默认隐藏自定义查询弹窗
+				startAddress:'',// 始发站
+				endAddress:'',// 目的站
+				acceptMan:'',// 收货人
 				endTime:'',
 				moreData:false,
 				info: {
@@ -181,6 +224,7 @@
 					}
 				],
 				popObj:{},// 弹窗对象
+				mouths:'',// 月份
 			}
 		},
 		onShow(){
@@ -188,31 +232,103 @@
 					this.pageType =  this.$tool.getstorage("pageType");
 					this.showCalendar = true;
 					this.dealfun();
-					this.getallDel();
+					// console.log("pageType",this.pageType);
 			}
 		},
 		onLoad(option) {
-			
+			this.getmonth();
+		},
+		computed: {
+			startDate() {
+				return this.getDate('start');
+			},
+			endDate() {
+				return this.getDate('end');
+			}
+		},
+		onReachBottom(){//uniapp 监听下拉加载生命周期
+			if(this.needReff){
+				this.currIndex =  ++this.currIndex;
+				this.delivery();
+			} 
 		},
 		methods: {
+			selectData(){
+				//  点击自定义查询按钮
+				this.orderData = [];
+				this.delivery();
+				this.keyword = "";
+				this.zdySelectPop = false;
+			},
+			getDate(type) { // 日期转换
+				const date = new Date();
+				let year = date.getFullYear();
+				let month = date.getMonth() + 1;
+				let day = date.getDate();
+	
+				if (type === 'start') {
+					year = year - 60;
+				} else if (type === 'end') {
+					year = year + 2;
+				}
+				month = month > 9 ? month : '0' + month;;
+				day = day > 9 ? day : '0' + day;
+				return `${year}-${month}-${day}`;
+			},
+			bindPickerChange: function(e) {
+				this.mouths = this.array[e.target.value];
+				this.orderData = [];
+				this.currIndex = 1;
+				this.delivery();
+			},
+			bindDateChange(e){
+			   // 时间选择器
+			   this.startTime = e.target.value
+			 },
+			 bindDateChange2(e){
+				 this.endTime = e.target.value
+			 },
+			getmonth(){
+					// 获取最近12个月
+					var dataArr = [];
+				　　var data = new Date();
+				　　var year = data.getFullYear();
+				　　data.setMonth(data.getMonth()+1, 1)           //获取到当前月份,设置月份
+				　　for (var i = 0; i < 12; i++) {
+				　　　　data.setMonth(data.getMonth() - 1);     //每次循环一次 月份值减1
+				　　　　var m = data.getMonth() + 1;
+				　　　　m = m < 10 ? "0" + m : m;
+				　　　　dataArr.push(data.getFullYear() + "-" + (m));
+				    }
+					 this.array = dataArr;
+					 this.mouths = dataArr[0];
+			},
 			showHidePop(){
+				// 显示隐藏弹窗
 				this.popStatus = !this.popStatus;
 			},
 			getallDel(){
-				// 查询汇总明细
+				// 查询汇总明细  // 5 账单 3库存  4 发货明细
 				let funType = 10;
 				if(this.pageType != 3){
 					funType = 5;
 				}
+				
 				let dat = {
 					functionType:funType,
 					xieyiKehuID:this.$tool.getstorage("xykh_id"),
-					begindate:'',
-					enddate:'',
-					city_shifazhan:'',
-					city_mudizhan:'',
-					shouhuoren:'',
-					orderNO:''
+					begindate:this.startTime,
+					enddate:this.endTime,
+					city_shifazhan:this.startAddress,
+					city_mudizhan:this.endAddress,
+					shouhuoren:this.acceptMan,
+					orderNO:this.keyword
+				}
+				if(this.pageType == 5){
+					delete dat.begindate;
+					delete dat.enddate;
+					dat.functionType = 23;
+					dat.yuefen = this.mouths;
 				}
 				this.$api(dat).then(res=>{
 					 console.log("看看汇总明细",res);
@@ -242,22 +358,22 @@
 				// console.log("复制")
 				uni.setClipboardData({data:val})
 			},
-			scrollLower(){ // 上拉加载
-				if(!this.needReff) return;
-			 	this.currIndex =  ++this.currIndex;
-				this.delivery();
-			},
-			changeTab(tab,type){ // 改变时间
-				// console.log(tab,type,this.timeTab,tab == this.currTab) 
-				if(tab==this.timeTab){
+			changeTab(tab,type,mouths=""){ // 改变时间
+				if(tab==this.timeTab){ 
 					this.dealfun();
 					this.timeTab = 0;
 					return
 				}else{
 					this.timeTab = tab;
 				}
-				if(tab == 4){
-					this.$refs.calendar.open();
+				if(this.pageType == 5 && tab != 4){
+					this.mouths = mouths;
+					this.dealfun();
+					return;
+				}
+				if(tab == 4 && this.pageType != 5){
+					// 自定义
+					this.zdySelectPop = true;
 					return
 				}
 				if(type == "time"){
@@ -275,6 +391,7 @@
 				this.startTime = startTime;
 				this.endTime = endtime;
 				this.delivery();
+				this.getallDel();
 			},
 			search(type){
 				type == 1 ? this.searchStatus = true : this.searchStatus = false;
@@ -312,7 +429,6 @@
 				let month = date.getMonth()+1;
 				let day = date.getDate();
 				let nowDate = year + "-" + (month < 10 ? "0" + month : month) + "-" + (day < 10 ? "0" + day : day);
-				
 				let lastDate = new Date(date - 1000 * 60 * 60 * 24 * type);//最后30天可以更改，意义：是获取多少天前的时间
 				let lastY = lastDate.getFullYear();
 				let lastM = lastDate.getMonth()+1;
@@ -320,13 +436,15 @@
 				let LDate = lastY + "-" + (lastM < 10 ? "0" + lastM : lastM) + "-"+ (lastD < 10 ? "0" + lastD : lastD);//得到30天前的时间
 				return {nowDate,LDate}
 			},
-			delivery(){ //发货明细
+			delivery(){ //发货明细  // 5 账单 3库存  4 发货明细
 				this.pageType =  this.$tool.getstorage("pageType");
 				let funType = '';
 			    if(this.pageType == 3){
 					funType = 11;
-				}else{
+				}else if(this.pageType == 4){
 					funType = 6;
+				}else{
+					funType = 24;
 				}
 				let dat = {
 					functionType:funType,
@@ -334,11 +452,16 @@
 					xieyiKehuID:this.$tool.getstorage("xykh_id"),
 					begindate:this.startTime,
 					enddate:this.endTime,
-					city_shifazhan:'',
-					city_mudizhan:'',
-					shouhuoren:'',
+					city_shifazhan:this.startAddress,
+					city_mudizhan:this.endAddress,
+					shouhuoren:this.acceptMan,
 					pageSize:10,
 					pageIndex:this.currIndex
+				}
+				if(this.pageType == 5){
+					delete dat.begindate;
+					delete dat.enddate;
+					dat.yuefen = this.mouths;
 				}
 				this.$api(dat).then((res)=>{
 					console.log("看看发货明细",res)
@@ -346,8 +469,6 @@
 						this.$tool.showTip(res.data.Msg);
 						let rel = res.Msg
 					}else{
-						// console.log("这是所有订单数据",this.orderData);
-						// console.log(JSON.parse(res.data.Msg).ds.prototype.toString());
 						if(Object.prototype.toString.call(JSON.parse(res.data.Msg).ds) == '[object Object]'){
 							console.log("laizhe")
 							this.moreData = true;
@@ -447,6 +568,7 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		background-color: $self-body-bgColor;
 		// justify-content: center;
 	}
 	.header{
@@ -454,11 +576,16 @@
 		display: flex;
 		position: fixed;
 		left: 50%;
-		top: 20upx;
+		top: 0upx;
+		z-index: 9;
+		padding: 20upx 0;
+		display: flex;
+		justify-content: center;
+		width: 100%;
 		transform: translateX(-50%);
 		align-items: center;
 		box-sizing: border-box;
-		
+		background-color: #fff;
 	}
 	.iptBox{
 		display: flex;
@@ -484,6 +611,11 @@
 		justify-content: space-around;
 		border-bottom: 2upx solid #F2F2F2;
 		box-sizing: border-box;
+		position: fixed;
+		left: 0;
+		top: 0;
+		background-color: #FFFFFF;
+		z-index: 9;
 	}
 	//all-font-Tcolor
 	.navBox>.navItem{
@@ -511,6 +643,11 @@
 		display: flex;
 		justify-content: space-around;
 		align-items: center;
+		position: fixed;
+		left: 0;
+		top: 110upx;
+		z-index: 9;
+		background-color: #fff;
 	}
 	.navTime>.timeItem{
 		width: 20%;
@@ -563,13 +700,8 @@
 		flex: 1;
 	}
 	.ydList{
-		width: 100%;
-		height: calc(100vh - 300upx);
-		display: flex;
-		align-items: center;
-		flex-direction: column;
-		margin-top: 18upx;
-		position: relative;
+		// width: 100%;
+		padding-top: 240upx;
 	}
 	.yditem{
 		width: 100%;
@@ -670,7 +802,10 @@
 	}
 	.nomore{
 		position: absolute;
-		bottom: -10upx;
+		// bottom: -10upx;
+		width: 100vw;
+		text-align: center;
+		background-color: $self-body-bgColor;
 		left: 50%;
 		transform: translateX(-50%);
 		color: #999;
@@ -749,5 +884,68 @@
 			// border: 10px solid;
 		}
 	}
-
+	.selectBox{
+		width: 100vw;
+		height: 100vh;
+		background-color: rgba(0,0,0,.3);
+		position: fixed;
+		left: 0;
+		top: 0;
+		z-index: 999;
+		.topBox{
+			width: 100%;
+			// height: 500upx;
+			padding-bottom: 30upx;
+			padding-top: 30upx;
+			box-sizing: border-box;
+			background-color: #FFFFFF;
+		}
+		.rowBox{
+			width: 90%;
+			height: 70upx;
+		    margin: 0 auto;
+			// margin: 15upx 0;
+			// background-color: rgba(0,0,0,.3);
+			display: flex;
+			align-items: center;
+			margin-bottom: 20upx;
+			text{
+				color: #666;
+				font-size: 28upx;
+				width: 120upx;
+				text-align: right;
+			}
+			input,>view{
+				flex: 1;
+				height: 60upx;
+				font-size: 28upx;
+				padding-left: 20upx;
+				box-sizing: border-box;
+				margin-left: 20upx;
+				border-radius: 15upx;
+				border: .5upx solid #dedede;
+			}
+			
+		}
+	}
+	.selBtn{
+		width: 60%;
+		margin: 0 auto;
+		height: 70upx;
+		background-color: $all-font-Tcolor;
+		color: #FFFFFF;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 28upx;
+		border-radius: 10upx;
+		margin-top: 40upx;
+	}
+	.uni-input{
+		width: 100%;
+		height: 60upx;
+		display: flex;
+		align-items: center;
+		// justify-content: center;
+	}
 </style>

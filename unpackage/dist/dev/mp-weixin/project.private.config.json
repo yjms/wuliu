@@ -21,7 +21,7 @@
         {
           "name": "预约寄件页面",
           "pathName": "pages/appoint/appoint",
-          "query": "",
+          "query": "type={\"ix\":\"1\"}&obj={\"ma_id\":\"2\",\"weixin_openid\":\"o_lCq5TGiXhc6XJmCK2eY3rkKvNk\",\"ma_receiver\":\"yls\",\"ZoneID\":\"1089\",\"zoneName\":\"安徽省_淮北市_烈山区\",\"ma_address\":\"asdasdas\",\"ma_company\":\"\",\"ma_postCode\":\"\",\"ma_Mobile\":\"18229718536\",\"ma_email\":\"\",\"m_type\":\"2\"}",
           "scene": null
         },
         {
@@ -69,6 +69,13 @@
         {
           "name": "picker",
           "pathName": "pages/picker/picker",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "我的预约",
+          "pathName": "pages/sendThing/sendThing",
+          "query": "",
           "scene": null
         }
       ]

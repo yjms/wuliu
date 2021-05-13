@@ -1,6 +1,6 @@
 const baseUrl = "https://www.hyk56.net/";
 export const api = (url,option={})=>{
-	// console.log(`${baseUrl}${url}`);
+	console.log(`${baseUrl}${url}`);
 	uni.showLoading({
 	    title: '加载中'
 	});
