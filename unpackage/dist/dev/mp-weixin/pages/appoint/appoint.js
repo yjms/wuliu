@@ -152,7 +152,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var Footpop = function Footpop() {__webpack_require__.e(/*! require.ensure | pages/components/Footpop */ "pages/components/Footpop").then((function () {return resolve(__webpack_require__(/*! ../components/Footpop.vue */ 102));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var Footpop = function Footpop() {__webpack_require__.e(/*! require.ensure | pages/components/Footpop */ "pages/components/Footpop").then((function () {return resolve(__webpack_require__(/*! ../components/Footpop.vue */ 110));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 
 
 

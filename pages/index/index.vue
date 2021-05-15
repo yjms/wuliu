@@ -14,6 +14,16 @@
 			</view>
 			
 			<view class="items">
+				<view class="iconBox iconfont icon-jijianfasong-xianxing">
+					
+				</view>
+				<view class="titleBox" @click="jump('other')">
+				   <text class="itemTitle">我的寄件</text>
+				   <text class="itemDle">查看预约寄件</text>
+				</view>
+			</view>
+			
+			<view class="items">
 				<view class="iconBox iconfont icon-B">
 					
 				</view>
@@ -42,6 +52,7 @@
 				   <text class="itemDle">查询发货明细</text>
 				</view>
 			</view>
+			
 			<view class="items">
 				<view class="iconBox iconfont icon-zhangdan">
 					
@@ -51,25 +62,27 @@
 				   <text class="itemDle">在线查看账单</text>
 				</view>
 			</view>
+			
+			
+			
 			<view class="items">
 				<view class="iconBox iconfont icon-lianxiwomen">
 					
 				</view>
 				<view class="titleBox">
 				   <text class="itemTitle">联系我们</text>
-				   <text class="itemDle">支持2小时上门取件</text>
+				   <text class="itemDle">问题咨询</text>
 					<button class="linkbtn" open-type="contact"></button>
 				</view>
 			</view>
 		</view>
 		<!-- 查看我的预约寄件 -->
 		
-		<view class="gzhBox" @click="jump('other')">
+		<!-- <view class="gzhBox" @click="jump('other')">
 			<view class="hzBox">
 			    我的寄件
-				<!-- <text class="iconfont icon-guanbi close"></text> -->
 			</view>
-		</view>
+		</view> -->
 		<!-- 关注公众号的盒子 -->
 <!-- 		<view class="gzhBox">
 			<view class="close iconfont icon-guanbi"></view>

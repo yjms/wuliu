@@ -295,6 +295,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
         then(function (res) {
           if (res.data.MsgID == 1) {
             _this2.$tool.showTip("删除成功！");
+            _this2.yyList = [];
             _this2.getyuyue();
           } else {
             _this2.$tool.showTip(res.data.Msg);

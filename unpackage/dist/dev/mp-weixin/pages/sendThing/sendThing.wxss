@@ -56,6 +56,7 @@
 }
 .whole.data-v-821cf758 {
   width: 100vw;
+  min-height: 100vh;
   background-color: #F2F2F2;
   display: -webkit-box;
   display: -webkit-flex;

@@ -150,6 +150,7 @@
 				 ).then(res=>{
 					 if(res.data.MsgID==1){
 						 this.$tool.showTip("删除成功！");
+						 this.yyList = [];
 						 this.getyuyue();
 					 }else{
 						 this.$tool.showTip(res.data.Msg);
@@ -253,7 +254,7 @@
 	}
 	.whole{
 		width: 100vw;
-		// height: 100vh;
+		min-height: 100vh;
 		background-color: $self-body-bgColor;
 		display: flex;
 		flex-direction: column;
